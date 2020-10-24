@@ -22,8 +22,9 @@
     <ClInclude Include="src\Core\Engine.h" />
     <ClInclude Include="src\Graphics\TextureManager.h" />
     <ClInclude Include="src\Input\Input.h" />
+    <ClInclude Include="src\Map\GameMap.h" />
     <ClInclude Include="src\Map\MapParser.h" />
-    <ClInclude Include="src\Map\TileLayer.h" />
+    <ClInclude Include="src\Map\TileParser.h" />
     <ClInclude Include="src\Vendor\tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
@@ -32,7 +33,7 @@
     <ClCompile Include="src\Graphics\TextureManager.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Map\MapParser.cpp" />
-    <ClCompile Include="src\Map\TileLayer.cpp" />
+    <ClCompile Include="src\Map\TileParser.cpp" />
     <ClCompile Include="src\Vendor\tinyxml2.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

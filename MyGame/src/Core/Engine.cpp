@@ -35,14 +35,23 @@ void Engine::Init() {
 				TextureManager::GetInstance()->Load("player_fall", "assets/Player/Fall.png");
 				TextureManager::GetInstance()->Load("player_jump", "assets/Player/Jump.png");
 				TextureManager::GetInstance()->Load("player_run", "assets/Player/Run.png");
-				MapParser::GetInstance()->Load();
-				bIsRunning = true;
+				if (!MapParser::GetInstance()->Load()) {
+					bIsRunning = false;
+					MapParser::GetInstance()->Clean();
+				}
+				else {
+					bIsRunning = true;
+				}
+				
 			}
 		}
 	}
 }
 void Engine::Events() {
-
+	SDL_SetRenderDrawColor(renderer, 100, 100, 100, 50);
+	SDL_RenderClear(renderer);
+	MapParser::GetInstance()->Render();
+	SDL_RenderPresent(renderer);
 }
 void Engine::Update() {
 
