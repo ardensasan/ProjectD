@@ -19,8 +19,6 @@ public:
 private:
 	MapParser();
 	static MapParser* instance;
-	std::vector<Tileset> tileSetList;
-	std::vector<TileMap> tileMapList;
 };
 #endif
 

@@ -20,10 +20,10 @@ struct TileMap {
 class TileParser
 {
 public:
-	TileParser(std::vector<Tileset> tileset);
+	TileParser(std::vector<Tileset> tileset, std::vector<TileMap> tilemap);
 	void Render();
 private:
-	std::vector<Tileset> tilesetList;
+	std::vector<Tileset> tileSetList;
 	std::vector<TileMap> tileMapList;
 };
 #endif

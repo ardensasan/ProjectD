@@ -27,14 +27,34 @@ void TextureManager::Draw() {
 }
 
 
+void TextureManager::DrawFrame(std::string id, int x, int y, int width, int height, int frameRow, int frameCol, SDL_RendererFlip flip) {
+	srcRect = { frameRow * width, frameCol * height, width, height };
+	dstRect = {x, y, width, height };
+	SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), assetMap[id], &srcRect, &dstRect, 0, 0, flip);
+}
+
+
 void TextureManager::DrawTile(std::string id,int row,int col,int width, int height, int srcX, int srcY) {
 	srcRect = { srcY * width,srcX* height,width,height };
 	dstRect = { row * width,col * height,width,height };
 	SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), assetMap[id], &srcRect, &dstRect, 0, 0, SDL_FLIP_NONE);
 }
 
+int TextureManager::GetMaxFrameRows(std::string textureID, int width) {
+	int textureWidth;
+	SDL_QueryTexture(assetMap[textureID], NULL, NULL, &textureWidth, NULL);
+	return textureWidth / width;
+}
+
+int TextureManager::GetMaxFrameCols(std::string textureID, int height) {
+	int textureHeight;
+	SDL_QueryTexture(assetMap[textureID], NULL, NULL, NULL, &textureHeight);
+	return textureHeight / height;
+}
 
 void TextureManager::Clean() {
+	SDL_DestroyTexture(texture);
+	texture = nullptr;
 	std::map<std::string, SDL_Texture*>::iterator it;
 	for (it = assetMap.begin();it != assetMap.end();it++) {
 		SDL_DestroyTexture(it->second);

@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include <sstream>
 #include "Engine.h"
+TileParser* tileparser;
 MapParser* MapParser::instance = nullptr;
 MapParser::MapParser() {
 
@@ -25,20 +26,24 @@ bool MapParser::Parse(std::string id, std::string source) {
 		return false;
 	}
 	//Parse tilesets
+	std::vector<Tileset> tilesets;
 	tinyxml2::XMLElement* root = xml.RootElement();
 	for (tinyxml2::XMLElement* e = root->FirstChildElement();e != nullptr;e = e->NextSiblingElement()) {
 		if (e->Value() == std::string("tileset")) {
-			tileSetList.push_back(ParseTileset(e));
+			tilesets.push_back(ParseTileset(e));
 		}
 	}
 	
 	//Parse tile layers
+	std::vector<TileMap> tilemaps;
 	for (tinyxml2::XMLElement* e = root->FirstChildElement();e != nullptr;e = e->NextSiblingElement()) {
 		if (e->Value() == std::string("layer")) {
-			tileMapList.push_back(ParseTileLayer(e));
+			tilemaps.push_back(ParseTileLayer(e));
 		}
 	}
-	TileParser* tileParser = new TileParser(tileSetList);
+	tileparser = new TileParser(tilesets, tilemaps);
+	GameMap* gamemap = new GameMap();
+	gamemap->mapLayers = tilemaps;
 	return true;
 }
 
@@ -87,41 +92,7 @@ TileMap MapParser::ParseTileLayer(tinyxml2::XMLElement* XMLLayer) {
 }
 
 void MapParser::Clean() {
-	tileSetList.clear();
-	tileMapList.clear();
 }
-#include <conio.h>
 void MapParser::Render() {
-	SDL_Texture *texture = IMG_LoadTexture(Engine::GetInstance()->GetRenderer(), "assets/Player/Fall.png");
-	for (unsigned int t = 0;t < tileMapList.size();t++) {
-		for (unsigned int col = 0;col < tileMapList[t].colCount;col++) {
-			std::cout << "\n";
-			for (unsigned int row = 0;row < tileMapList[t].rowCount;row++) {
-
-				//SDL_Rect srcRect = { 0,0,32,32 };
-				//SDL_Rect dstRect = { row * 16,col * 16,16,16 };
-				//SDL_SetRenderDrawColor(Engine::GetInstance()->GetRenderer(), 100, 100, 100, 50);
-				//SDL_RenderClear(Engine::GetInstance()->GetRenderer());
-				//SDL_RenderCopy(Engine::GetInstance()->GetRenderer(), texture, &srcRect, &dstRect);
-				//SDL_RenderPresent(Engine::GetInstance()->GetRenderer());
-				//std::cout << tileMapList[t].tileMap[row][col] << std::endl;
-				//_getch();
-				for (unsigned int ts = 0;ts < tileSetList.size();ts++) {
-					if (tileMapList[t].tileMap[row][col] >= tileSetList[ts].firstID && tileMapList[t].tileMap[row][col] <= tileSetList[ts].lastID) {
-						int tileID = tileMapList[t].tileMap[row][col] + tileSetList[ts].tileCount - tileSetList[ts].lastID;
-
-						int tileRow = tileID / tileSetList[ts].colCount;
-						int tileCol = tileID - tileRow * tileSetList[ts].colCount - 1;
-						if (tileID % tileSetList[ts].colCount == 0) {
-							tileRow--;
-							tileCol = tileSetList[ts].colCount - 1;
-						}
-						TextureManager::GetInstance()->DrawTile(tileSetList[ts].name, row, col, tileSetList[ts].width, tileSetList[ts].height, tileRow, tileCol);
-						break;
-					}
-				}
-			}
-		}
-	}
-
+	tileparser->Render();
 }

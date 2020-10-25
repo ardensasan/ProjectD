@@ -1,7 +1,11 @@
 #include "Engine.h"
 #include "TextureManager.h"
 #include "MapParser.h"
+#include "Input.h"
+#include "Player.h"
+#include "Timer.h"
 Engine* Engine::instance = nullptr;
+Player* player;
 Engine::Engine() {
 	bIsRunning = false;
 	window = nullptr;
@@ -40,6 +44,7 @@ void Engine::Init() {
 					MapParser::GetInstance()->Clean();
 				}
 				else {
+					player = new Player("player_idle", 32, 32);
 					bIsRunning = true;
 				}
 				
@@ -48,19 +53,22 @@ void Engine::Init() {
 	}
 }
 void Engine::Events() {
+	Input::GetInstance()->Listen();
+}
+void Engine::Update() {
+	float dt = Timer::GetInstance()->GetDeltaTime();
+	player->Update(dt);
+}
+void Engine::Render() {
 	SDL_SetRenderDrawColor(renderer, 100, 100, 100, 50);
 	SDL_RenderClear(renderer);
 	MapParser::GetInstance()->Render();
+	player->Draw();
 	SDL_RenderPresent(renderer);
-}
-void Engine::Update() {
-
-}
-void Engine::Render() {
-
 }
 void Engine::Clean() {
 	TextureManager::GetInstance()->Clean();
+	MapParser::GetInstance()->Clean();
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	window = nullptr;

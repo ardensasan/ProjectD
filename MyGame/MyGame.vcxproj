@@ -19,21 +19,32 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Animation\Animation.h" />
     <ClInclude Include="src\Core\Engine.h" />
     <ClInclude Include="src\Graphics\TextureManager.h" />
     <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\Map\GameMap.h" />
     <ClInclude Include="src\Map\MapParser.h" />
     <ClInclude Include="src\Map\TileParser.h" />
+    <ClInclude Include="src\Object\GameObject.h" />
+    <ClInclude Include="src\Object\IObject.h" />
+    <ClInclude Include="src\Object\Player.h" />
+    <ClInclude Include="src\Object\RigidBody.h" />
+    <ClInclude Include="src\Timer\Timer.h" />
     <ClInclude Include="src\Vendor\tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\Animation\Animation.cpp" />
     <ClCompile Include="src\Core\Engine.cpp" />
     <ClCompile Include="src\Graphics\TextureManager.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Map\MapParser.cpp" />
     <ClCompile Include="src\Map\TileParser.cpp" />
+    <ClCompile Include="src\Object\GameObject.cpp" />
+    <ClCompile Include="src\Object\Player.cpp" />
+    <ClCompile Include="src\Object\RigidBody.cpp" />
+    <ClCompile Include="src\Timer\Timer.cpp" />
     <ClCompile Include="src\Vendor\tinyxml2.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -108,7 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\Dev\MyGame\MyGame\src\Core;D:\Dev\MyGame\MyGame\src\Graphics;D:\Dev\MyGame\MyGame\src\Input;D:\Dev\MyGame\MyGame\src\Map;D:\Dev\MyGame\MyGame\src\Vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Dev\MyGame\MyGame\src\Timer;D:\Dev\MyGame\MyGame\src\Animation;D:\Dev\MyGame\MyGame\src\Object;D:\Dev\MyGame\MyGame\src\Core;D:\Dev\MyGame\MyGame\src\Graphics;D:\Dev\MyGame\MyGame\src\Input;D:\Dev\MyGame\MyGame\src\Map;D:\Dev\MyGame\MyGame\src\Vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
