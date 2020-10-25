@@ -11,7 +11,7 @@ Player::Player(std::string id, int width, int height) {
 	direction = 3;
 ;}
 
-void Player::Update(float dt) {
+void Player::Update() {
 	SDL_RendererFlip flip;
 	if (direction == 3)
 		flip = SDL_FLIP_NONE;

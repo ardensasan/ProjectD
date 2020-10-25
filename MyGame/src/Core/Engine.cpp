@@ -3,7 +3,6 @@
 #include "MapParser.h"
 #include "Input.h"
 #include "Player.h"
-#include "Timer.h"
 Engine* Engine::instance = nullptr;
 Player* player;
 Engine::Engine() {
@@ -56,8 +55,7 @@ void Engine::Events() {
 	Input::GetInstance()->Listen();
 }
 void Engine::Update() {
-	float dt = Timer::GetInstance()->GetDeltaTime();
-	player->Update(dt);
+	player->Update();
 }
 void Engine::Render() {
 	SDL_SetRenderDrawColor(renderer, 100, 100, 100, 50);

@@ -6,13 +6,14 @@ const float DELTATIME = 1.5f;
 class Timer
 {
 public:
-	void Tick();
-	inline float GetDeltaTime() { return deltaTime; };
+	void SetFrameStart();
+	void Delay();
 	static Timer* GetInstance();
 private:
 	Timer();
 	static Timer* instance;
-	float deltaTime;
-	float lastTime;
+	int frameTime;
+	const int FPS = 60;
+	const int frameDelay = 1000 / FPS;
 };
 #endif
