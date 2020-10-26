@@ -33,10 +33,15 @@ void TextureManager::DrawFrame(std::string id, int x, int y, int width, int heig
 	SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), assetMap[id], &srcRect, &dstRect, 0, 0, flip);
 }
 
+void TextureManager::DrawFrame(std::string id, int x, int y, int width, int height, int frameRow, int frameCol, SDL_Rect cameraView, SDL_RendererFlip flip) {
+	srcRect = { frameRow * width, frameCol * height, width, height };
+	dstRect = { x - cameraView.x ,y - cameraView.y,width,height };
+	SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), assetMap[id], &srcRect, &dstRect, 0, 0, flip);
+}
 
-void TextureManager::DrawTile(std::string id,int row,int col,int width, int height, int srcX, int srcY) {
+void TextureManager::DrawTile(std::string id,int row,int col,int width, int height, int srcX, int srcY, SDL_Rect cameraView) {
 	srcRect = { srcY * width,srcX* height,width,height };
-	dstRect = { row * width,col * height,width,height };
+	dstRect = { (row * width) - cameraView.x,(col * height)-cameraView.y,width,height };
 	SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), assetMap[id], &srcRect, &dstRect, 0, 0, SDL_FLIP_NONE);
 }
 

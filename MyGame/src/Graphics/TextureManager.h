@@ -10,8 +10,9 @@ public:
 	void Load(std::string id, std::string filename);
 	void Draw();
 	void Clean();
-	void DrawTile(std::string id, int x, int y, int width, int height, int srcX, int srcY);
+	void DrawTile(std::string id, int x, int y, int width, int height, int srcX, int srcY, SDL_Rect cameraView);
 	void DrawFrame(std::string id, int x, int y, int width, int height, int frameRow, int frameCol, SDL_RendererFlip flip);
+	void DrawFrame(std::string id, int x, int y, int width, int height, int frameRow, int frameCol, SDL_Rect cameraView, SDL_RendererFlip flip);
 	int GetMaxFrameRows(std::string textureID,int width);
 	int GetMaxFrameCols(std::string textureID, int height);
 private:

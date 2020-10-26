@@ -15,6 +15,7 @@ public:
 	void Clean();
 private:
 	Engine();
+	int screenWidth, screenHeight;
 	static Engine* instance;
 	bool bIsRunning;
 	SDL_Window* window;

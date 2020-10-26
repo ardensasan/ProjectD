@@ -4,6 +4,7 @@
 #include "Engine.h"
 TileParser* tileparser;
 MapParser* MapParser::instance = nullptr;
+GameMap* gamemap;
 MapParser::MapParser() {
 
 }
@@ -15,7 +16,7 @@ MapParser* MapParser::GetInstance() {
 }
 
 bool MapParser::Load() {
-	return Parse("test", "assets/Maps/Map1.tmx");
+	return Parse("test", "assets/Maps/test.tmx");
 }
 
 bool MapParser::Parse(std::string id, std::string source) {
@@ -41,9 +42,11 @@ bool MapParser::Parse(std::string id, std::string source) {
 			tilemaps.push_back(ParseTileLayer(e));
 		}
 	}
-	tileparser = new TileParser(tilesets, tilemaps);
-	GameMap* gamemap = new GameMap();
+	tileparser = new TileParser(tilesets);
+	gamemap = new GameMap();
 	gamemap->mapLayers = tilemaps;
+	//update tilemaps to match tileset properties
+	gamemap->Update(tileparser->Update());
 	return true;
 }
 
@@ -65,6 +68,7 @@ Tileset MapParser::ParseTileset(tinyxml2::XMLElement* XMLTileset) {
 TileMap MapParser::ParseTileLayer(tinyxml2::XMLElement* XMLLayer) {
 	TileMap tilemap;
 	//Resize vector according to layer row and column
+	tilemap.layerName = XMLLayer->Attribute("name");
 	tilemap.rowCount = atoi(XMLLayer->Attribute("width"));
 	tilemap.colCount = atoi(XMLLayer->Attribute("height"));
 	tilemap.tileMap.resize(tilemap.rowCount, std::vector<int>(tilemap.colCount));
@@ -91,8 +95,13 @@ TileMap MapParser::ParseTileLayer(tinyxml2::XMLElement* XMLLayer) {
 	return tilemap;
 }
 
-void MapParser::Clean() {
+void MapParser::UpdateTileMaps(std::vector<TileMap> tilemaps) {
+	tileparser->Update();
 }
 void MapParser::Render() {
 	tileparser->Render();
+}
+
+
+void MapParser::Clean() {
 }

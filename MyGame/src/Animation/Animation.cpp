@@ -1,5 +1,6 @@
 #include "Animation.h"
 #include "TextureManager.h"
+#include "Camera.h"
 #include <iostream>
 Animation::Animation() {
 	frameRow = 0;
@@ -10,7 +11,7 @@ void Animation::Update() {
 }
 
 void Animation::Draw(int x, int y, int width, int height) {
-	TextureManager::GetInstance()->DrawFrame(textureID, x, y, width, height, frameRow, frameCol, flip);
+	TextureManager::GetInstance()->DrawFrame(textureID, x, y, width, height, frameRow, frameCol, Camera::GetInstance()->GetCameraView(), flip);
 }
 
 void Animation::SetProperty(std::string id, int width, int height, int animationdelay, SDL_RendererFlip f) {

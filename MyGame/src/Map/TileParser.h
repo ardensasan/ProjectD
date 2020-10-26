@@ -12,6 +12,8 @@ struct Tileset {
 };
 
 struct TileMap {
+	int tileWidth, tileHeight;
+	std::string layerName;
 	int rowCount;
 	int colCount;
 	std::vector< std::vector<int> > tileMap;
@@ -20,7 +22,8 @@ struct TileMap {
 class TileParser
 {
 public:
-	TileParser(std::vector<Tileset> tileset, std::vector<TileMap> tilemap);
+	TileParser(std::vector<Tileset> tileset);
+	std::vector<TileMap> Update();
 	void Render();
 private:
 	std::vector<Tileset> tileSetList;

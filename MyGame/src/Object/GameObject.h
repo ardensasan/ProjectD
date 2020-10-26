@@ -2,6 +2,7 @@
 #define GAMEOBJECT_H
 #include "IObject.h"
 #include "SDL.h"
+#include "Position.h"
 #include <iostream>
 class GameObject:public IObject
 {
@@ -11,6 +12,7 @@ public:
 	virtual void Draw() = 0;
 	virtual void Clean() = 0;
 protected:
+	Position* position;
 	int width, height;
 	std::string textureID;
 	SDL_RendererFlip flip;

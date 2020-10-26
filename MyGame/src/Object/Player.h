@@ -2,7 +2,6 @@
 #define PLAYER_H
 #include "GameObject.h"
 #include "Animation.h"
-#include "RigidBody.h"
 #include "SDL.h"
 class Player:public GameObject
 {
@@ -13,7 +12,6 @@ public:
 	virtual void Clean();
 private:
 	Animation* animation;
-	RigidBody* rigidbody;
 };
 
 #endif

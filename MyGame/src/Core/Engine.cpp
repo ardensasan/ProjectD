@@ -3,6 +3,7 @@
 #include "MapParser.h"
 #include "Input.h"
 #include "Player.h"
+#include "Camera.h"
 Engine* Engine::instance = nullptr;
 Player* player;
 Engine::Engine() {
@@ -17,12 +18,14 @@ Engine* Engine::GetInstance() {
 }
 
 void Engine::Init() {
+	screenWidth = 1024;
+	screenHeight = 576;
 	if (SDL_Init(SDL_INIT_VIDEO) != 0 && IMG_Init(IMG_INIT_PNG) != 0) {
 		SDL_Log("Failed to initialize SDL %s", SDL_GetError());
 		bIsRunning = false;
 	}
 	else {
-		window = SDL_CreateWindow("Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, 0);
+		window = SDL_CreateWindow("Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenWidth, screenHeight, 0);
 		if (window == nullptr) {
 			SDL_Log("Failed to create window %s", SDL_GetError());
 			bIsRunning = false;
@@ -38,6 +41,7 @@ void Engine::Init() {
 				TextureManager::GetInstance()->Load("player_fall", "assets/Player/Fall.png");
 				TextureManager::GetInstance()->Load("player_jump", "assets/Player/Jump.png");
 				TextureManager::GetInstance()->Load("player_run", "assets/Player/Run.png");
+				Camera::GetInstance()->Set(screenWidth, screenHeight);
 				if (!MapParser::GetInstance()->Load()) {
 					bIsRunning = false;
 					MapParser::GetInstance()->Clean();

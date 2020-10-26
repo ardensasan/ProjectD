@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Input.h"
+#include "Camera.h"
 const float MOVELEFT = -5.0f;
 const float MOVERIGHT = 5.0f;
 const float MOVEUP = -5.0f;
@@ -7,7 +8,7 @@ const float MOVEDOWN = 5.0f;
 Player::Player(std::string id, int width, int height) {
 	SetProperties(id, width, height);
 	animation = new Animation();
-	rigidbody = new RigidBody();
+	position = new Position();
 	direction = 3;
 ;}
 
@@ -23,31 +24,32 @@ void Player::Update() {
 	//move left
 	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_A)) {
 		direction = 1;
-		rigidbody->MovePosX(MOVELEFT);
+		position->UpdatePosX(MOVELEFT);
 		animation->SetProperty("player_run", width, height, 50, flip);
 	}
 	//move right
 	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_D)) {
 		direction = 3;
-		rigidbody->MovePosX(MOVERIGHT);
+		position->UpdatePosX(MOVERIGHT);
 		animation->SetProperty("player_run", width, height, 50, flip);
 	}
 	//move up 
 	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_W)) {
 		direction = 2;
-		rigidbody->MovePosY(MOVEUP);
+		position->UpdatePosY(MOVEUP);
 		animation->SetProperty("player_run", width, height, 50, flip);
 	}
 	//move down 
 	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_S)) {
 		direction = 4;
-		rigidbody->MovePosY(MOVEDOWN);
+		position->UpdatePosY(MOVEDOWN);
 		animation->SetProperty("player_run", width, height, 50, flip);
 	}
 	animation->Update();
+	Camera::GetInstance()->Update(position->GetPositionX(), position->GetPositionY());
 }
 void Player::Draw() {
-	animation->Draw(rigidbody->GetPositionX(), rigidbody->GetPositionY(), width,height);
+	animation->Draw(position->GetPositionX(), position->GetPositionY(), width,height);
 }
 void Player::Clean(){
 }

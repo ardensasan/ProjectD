@@ -14,10 +14,13 @@ public:
 	bool Parse(std::string id, std::string filename);
 	Tileset ParseTileset(tinyxml2::XMLElement* XMLTileset);
 	TileMap ParseTileLayer(tinyxml2::XMLElement* XMLTileset);
-	void Clean();
+	std::vector<TileMap> GetMapLayers() { return gamemap->mapLayers; };
+	void UpdateTileMaps(std::vector<TileMap> tilemaps);
 	void Render();
+	void Clean();
 private:
 	MapParser();
+	GameMap* gamemap;
 	static MapParser* instance;
 };
 #endif
