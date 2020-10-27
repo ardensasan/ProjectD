@@ -11,8 +11,8 @@ TileParser::TileParser(std::vector<Tileset> tilesets) {
 std::vector<TileMap> TileParser::Update() {
 	tileMapList = MapParser::GetInstance()->GetMapLayers();
 	for (unsigned int t = 0;t < tileMapList.size();t++) {
-		for (int col = 0;col < tileMapList[t].colCount;col++) {
-			for (int row = 0;row < tileMapList[t].rowCount;row++) {
+		for (int row = 0;row < tileMapList[t].rowCount;row++) {
+			for (int col = 0;col < tileMapList[t].colCount;col++) {
 				for (unsigned int ts = 0;ts < tileSetList.size();ts++) {
 					if (tileMapList[t].tileMap[row][col] >= tileSetList[ts].firstID && tileMapList[t].tileMap[row][col] <= tileSetList[ts].lastID) {
 						tileMapList[t].tileWidth = tileSetList[ts].width;
@@ -29,8 +29,8 @@ std::vector<TileMap> TileParser::Update() {
 void TileParser::Render() {
 	tileMapList = MapParser::GetInstance()->GetMapLayers();
 	for (unsigned int t = 0;t < tileMapList.size();t++) {
-		for (int col = 0;col < tileMapList[t].colCount;col++) {
-			for (int row = 0;row < tileMapList[t].rowCount;row++) {
+		for (int row = 0;row < tileMapList[t].rowCount;row++) {
+			for (int col = 0;col < tileMapList[t].colCount;col++) {
 				for (unsigned int ts = 0;ts < tileSetList.size();ts++) {
 					if (tileMapList[t].tileMap[row][col] >= tileSetList[ts].firstID && tileMapList[t].tileMap[row][col] <= tileSetList[ts].lastID) {
 						int tileID = tileMapList[t].tileMap[row][col] + tileSetList[ts].tileCount - tileSetList[ts].lastID;
