@@ -36,7 +36,7 @@ void ObjectProperty::UpdatePosY(float y) {
 		for (int i = 0; i <= y; i++)
 		{
 			objProperty.yPosition += i;
-			if (CollisionHandler::GetInstance()->CheckMapCollision(objProperty)) {
+			if (CollisionHandler::GetInstance()->CheckMapCollision(objProperty,i)) {
 				objProperty.yPosition = Y;
 				break;
 			}
@@ -44,10 +44,10 @@ void ObjectProperty::UpdatePosY(float y) {
 		}
 	}
 	if (y < 0) {
-		for (int i = y; i <= 0; i++)
+		for (int i = y; i < 0; i++)
 		{
 			objProperty.yPosition += i;
-			if (CollisionHandler::GetInstance()->CheckMapCollision(objProperty)) {
+			if (CollisionHandler::GetInstance()->CheckMapCollision(objProperty,i)) {
 				objProperty.yPosition = Y;
 				break;
 			}

@@ -7,6 +7,7 @@ class CollisionHandler
 public:
 	static CollisionHandler* GetInstance();
 	bool CheckMapCollision(ObjProperty objProperty);
+	bool CheckMapCollision(ObjProperty objProperty, int y);
 	void Clean();
 private:
 	CollisionHandler();
