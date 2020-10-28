@@ -22,6 +22,5 @@ void Animation::SetProperty(std::string id, int width, int height, int animation
 	frameMaxRow = TextureManager::GetInstance()->GetMaxFrameRows(textureID, width);
 }
 void Animation::Clean() {
-
 	TextureManager::GetInstance()->Clean();
 }

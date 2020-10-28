@@ -30,6 +30,7 @@
     <ClInclude Include="src\Map\TileParser.h" />
     <ClInclude Include="src\Object\GameObject.h" />
     <ClInclude Include="src\Object\IObject.h" />
+    <ClInclude Include="src\Object\MovingObject.h" />
     <ClInclude Include="src\Object\Player.h" />
     <ClInclude Include="src\Object\ObjectProperty.h" />
     <ClInclude Include="src\Timer\Timer.h" />
@@ -46,6 +47,7 @@
     <ClCompile Include="src\Map\MapParser.cpp" />
     <ClCompile Include="src\Map\TileParser.cpp" />
     <ClCompile Include="src\Object\GameObject.cpp" />
+    <ClCompile Include="src\Object\MovingObject.cpp" />
     <ClCompile Include="src\Object\ObjectProperty.cpp" />
     <ClCompile Include="src\Object\Player.cpp" />
     <ClCompile Include="src\Timer\Timer.cpp" />
