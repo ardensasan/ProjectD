@@ -1,13 +1,13 @@
 #ifndef COLLISIONHANDLER_H
 #define COLLISIONHANDLER_H
-#include "ObjectProperty.h"
 #include "TileParser.h"
+#include "GameObject.h"
 class CollisionHandler
 {
 public:
 	static CollisionHandler* GetInstance();
-	bool CheckMapCollision(ObjProperty objProperty);
-	bool CheckMapCollision(ObjProperty objProperty, int y);
+	bool CheckMapCollision(ObjectProperty objProperty);
+	bool CheckMapCollision(ObjectProperty objProperty, int y);
 	void Clean();
 private:
 	CollisionHandler();

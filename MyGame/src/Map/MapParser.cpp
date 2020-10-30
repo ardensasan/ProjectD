@@ -16,7 +16,7 @@ MapParser* MapParser::GetInstance() {
 }
 
 bool MapParser::Load() {
-	return Parse("test", "assets/Maps/Map1.tmx");
+	return Parse("Map1", "assets/Maps/Map1.tmx");
 }
 
 bool MapParser::Parse(std::string id, std::string source) {

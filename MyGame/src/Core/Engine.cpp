@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Camera.h"
 #include "CollisionHandler.h"
+#include "Timer.h"
 Engine* Engine::instance = nullptr;
 Player* player;
 Engine::Engine() {
@@ -60,7 +61,8 @@ void Engine::Events() {
 	Input::GetInstance()->Listen();
 }
 void Engine::Update() {
-	player->Update();
+	float dt = Timer::GetInstance()->GetDeltaTime();
+	player->Update(dt);
 	MapParser::GetInstance()->GetMapLayers();
 }
 void Engine::Render() {

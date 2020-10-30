@@ -32,7 +32,6 @@
     <ClInclude Include="src\Object\IObject.h" />
     <ClInclude Include="src\Object\MovingObject.h" />
     <ClInclude Include="src\Object\Player.h" />
-    <ClInclude Include="src\Object\ObjectProperty.h" />
     <ClInclude Include="src\Timer\Timer.h" />
     <ClInclude Include="src\Vendor\tinyxml2.h" />
   </ItemGroup>
@@ -46,9 +45,7 @@
     <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Map\MapParser.cpp" />
     <ClCompile Include="src\Map\TileParser.cpp" />
-    <ClCompile Include="src\Object\GameObject.cpp" />
     <ClCompile Include="src\Object\MovingObject.cpp" />
-    <ClCompile Include="src\Object\ObjectProperty.cpp" />
     <ClCompile Include="src\Object\Player.cpp" />
     <ClCompile Include="src\Timer\Timer.cpp" />
     <ClCompile Include="src\Vendor\tinyxml2.cpp" />

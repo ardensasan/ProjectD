@@ -3,14 +3,22 @@
 #include "IObject.h"
 #include "SDL.h"
 #include <iostream>
+struct ObjectProperty {
+	std::string textureID;
+	float xPosition;
+	float yPosition;
+	int width;
+	int height;
+};
+
 class GameObject:public IObject
 {
 public:
-	GameObject();
+	GameObject() {}
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void Clean() = 0;
-protected:
+private:
 };
 #endif
 

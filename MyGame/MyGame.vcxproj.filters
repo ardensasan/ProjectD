@@ -57,9 +57,6 @@
     <ClInclude Include="src\CollisionHandler\CollisionHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Object\ObjectProperty.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Object\MovingObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -86,9 +83,6 @@
     <ClCompile Include="src\Map\TileParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Object\GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Object\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,9 +96,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\CollisionHandler\CollisionHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Object\ObjectProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Object\MovingObject.cpp">

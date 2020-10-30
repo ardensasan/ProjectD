@@ -1,26 +1,31 @@
 #ifndef MOVINGOBJECT_H
 #define MOVINGOBJECT_H
-#include "ObjectProperty.h"
+#include "GameObject.h"
 #include "Animation.h"
-class MovingObject : public ObjectProperty
+class MovingObject : public GameObject
 {
 public:
 	MovingObject();
 	MovingObject(std::string id, int w, int h);
-	inline float GetPositionX() { return objProperty.xPosition; }
-	inline float GetPositionY() { return objProperty.yPosition; }
-	inline int GetWidth() { return objProperty.width; }
-	inline int GetHeight() { return objProperty.height; }
 	void UpdatePosX(float x);
 	void UpdatePosY(float y);
-	inline ObjProperty GetProperties() { return objProperty; };
+	inline bool IsOnGround() { return isOnGround; }
+	void SetJump(bool b);
 	virtual void Update();
 	virtual void Draw();
 	virtual void Clean();
 	void SetTexture(std::string id);
+	bool JumpCollide() { return jumpCollide; }
 protected:
-	Animation* animation;
-	int animationDelay;
+	float yVelocity,xVelocity;
+	ObjectProperty objectProperty;
 	int direction; // 1=left 2=up 3=right 4=down
+	float gravity;
+	SDL_RendererFlip flip;
+private:
+	Animation* animation;
+	bool jumpCollide;
+	bool isOnGround;
+	int animationDelay;
 };
 #endif
