@@ -15,7 +15,6 @@ public:
 	Tileset ParseTileset(tinyxml2::XMLElement* XMLTileset);
 	TileMap ParseTileLayer(tinyxml2::XMLElement* XMLTileset);
 	std::vector<TileMap> GetMapLayers() { return gamemap->mapLayers; };
-	void UpdateTileMaps(std::vector<TileMap> tilemaps);
 	void Render();
 	void Clean();
 private:

@@ -6,7 +6,6 @@ class GameMap {
 public:
 	GameMap() {};
 	void Render();
-	void Update(std::vector<TileMap> tilemap);
 	std::vector<TileMap> GetMapLayer() { return mapLayers; };
 private:
 	friend class MapParser;

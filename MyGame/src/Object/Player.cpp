@@ -1,55 +1,58 @@
 #include "Player.h"
 #include "Input.h"
 #include "Camera.h"
-const float MOVELEFT = -5.0f;
-const float MOVERIGHT = 5.0f;
-const float MOVEUP = -5.0f;
-const float MOVEDOWN = 5.0f;
+
+const float MOVELEFT = -3.0f;
+const float MOVERIGHT = 3.0f;
 Player::Player(std::string id, int width, int height) {
-	SetProperties(id, width, height);
-	animation = new Animation();
-	position = new Position();
+	movingObject = new MovingObject(id, width, height);
 	direction = 3;
+	gravity = 1;
+	yVelocity = 5.0f;
+	xVelocity = 0;
 ;}
 
-void Player::Update() {
-	SDL_RendererFlip flip;
-	if (direction == 3)
-		flip = SDL_FLIP_NONE;
-	else if(direction == 1)
-		flip = SDL_FLIP_HORIZONTAL;
-	else
-		flip = SDL_FLIP_HORIZONTAL;
-	animation->SetProperty("player_idle", width, height, 50, flip);
+void Player::Update(float dt) {
+	if (yVelocity < 0) {
+		yVelocity += 0.5f;
+	}
+	else {
+		yVelocity++;
+	}
+	movingObject->SetTexture("player_idle");
 	//move left
 	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_A)) {
 		direction = 1;
-		position->UpdatePosX(MOVELEFT);
-		animation->SetProperty("player_run", width, height, 50, flip);
+		movingObject->UpdatePosX(MOVELEFT*dt);
+		movingObject->SetTexture("player_run");
 	}
 	//move right
 	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_D)) {
 		direction = 3;
-		position->UpdatePosX(MOVERIGHT);
-		animation->SetProperty("player_run", width, height, 50, flip);
+		movingObject->UpdatePosX(MOVERIGHT*dt);
+		movingObject->SetTexture("player_run");
 	}
-	//move up 
-	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_W)) {
-		direction = 2;
-		position->UpdatePosY(MOVEUP);
-		animation->SetProperty("player_run", width, height, 50, flip);
-	}
-	//move down 
-	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_S)) {
+	//space 
+	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_SPACE) && movingObject->IsOnGround()) {
 		direction = 4;
-		position->UpdatePosY(MOVEDOWN);
-		animation->SetProperty("player_run", width, height, 50, flip);
+		movingObject->SetTexture("player_run");
+		yVelocity = -6.0f;
 	}
-	animation->Update();
-	Camera::GetInstance()->Update(position->GetPositionX(), position->GetPositionY());
+	if (movingObject->JumpCollide())
+		yVelocity = 0;
+	if (yVelocity > 4)
+		yVelocity = 4;
+	if (yVelocity > 0 && !movingObject->IsOnGround())
+		movingObject->SetTexture("player_fall");
+	if ( yVelocity < 0 && !movingObject->IsOnGround())
+		movingObject->SetTexture("player_jump");
+	movingObject->UpdatePosY(yVelocity * dt);
+	movingObject->Update();
 }
+
 void Player::Draw() {
-	animation->Draw(position->GetPositionX(), position->GetPositionY(), width,height);
+	movingObject->Draw();
 }
 void Player::Clean(){
+	delete movingObject;
 }

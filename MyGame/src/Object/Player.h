@@ -1,17 +1,16 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-#include "GameObject.h"
-#include "Animation.h"
+#include "MovingObject.h"
 #include "SDL.h"
-class Player:public GameObject
+class Player:public MovingObject
 {
 public:
 	Player(std::string id, int width, int height);
-	virtual void Update();
+	virtual void Update(float dt);
 	virtual void Draw();
 	virtual void Clean();
 private:
-	Animation* animation;
+	MovingObject* movingObject;
 };
 
 #endif

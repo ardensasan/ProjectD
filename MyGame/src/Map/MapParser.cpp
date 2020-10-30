@@ -16,7 +16,7 @@ MapParser* MapParser::GetInstance() {
 }
 
 bool MapParser::Load() {
-	return Parse("test", "assets/Maps/Map1.tmx");
+	return Parse("Map1", "assets/Maps/Map1.tmx");
 }
 
 bool MapParser::Parse(std::string id, std::string source) {
@@ -45,8 +45,8 @@ bool MapParser::Parse(std::string id, std::string source) {
 	tileparser = new TileParser(tilesets);
 	gamemap = new GameMap();
 	gamemap->mapLayers = tilemaps;
+	gamemap->mapLayers = tileparser->Update();
 	//update tilemaps to match tileset properties
-	gamemap->Update(tileparser->Update());
 	return true;
 }
 
@@ -95,9 +95,6 @@ TileMap MapParser::ParseTileLayer(tinyxml2::XMLElement* XMLLayer) {
 	return tilemap;
 }
 
-void MapParser::UpdateTileMaps(std::vector<TileMap> tilemaps) {
-	tileparser->Update();
-}
 void MapParser::Render() {
 	tileparser->Render();
 }

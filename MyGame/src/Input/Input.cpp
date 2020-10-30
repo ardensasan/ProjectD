@@ -26,7 +26,7 @@ void Input::Listen() {
 		}
 	}
 }
-#include <iostream>
+
 bool Input::GetKeyDown(SDL_Scancode key) {
 	return (KeyState != NULL && KeyState[key]);
 }
