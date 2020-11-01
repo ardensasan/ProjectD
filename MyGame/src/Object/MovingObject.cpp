@@ -13,6 +13,7 @@ MovingObject::MovingObject(std::string id, int w, int h) {
 	animationDelay = 50;
 	jumpCollide = false;
 	animation = new Animation();
+	boxColiider = new BoxCollider();
 }
 
 void MovingObject::UpdatePosX(float x) {
@@ -81,11 +82,14 @@ void MovingObject::SetTexture(std::string id) {
 	animation->SetProperty(id, objectProperty.width, objectProperty.height, animationDelay, flip);
 }
 void MovingObject::Update() {
+
 	Camera::GetInstance()->Update(objectProperty.xPosition, objectProperty.yPosition);
+	boxColiider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height);
 	animation->Update();
 }
-void MovingObject::Draw(){
-	animation->Draw(int(objectProperty.xPosition), int(objectProperty.yPosition), objectProperty.width, objectProperty.height);
+void MovingObject::Render(){
+	animation->Render(int(objectProperty.xPosition), int(objectProperty.yPosition), objectProperty.width, objectProperty.height);
+	boxColiider->Render();
 }
 void MovingObject::Clean(){
 	delete animation;

@@ -38,7 +38,10 @@ bool CollisionHandler::CheckObjectMapCollision(ObjectProperty objProperty, int m
 								if ((objProperty.yPosition + objProperty.height) < (tileRect.y + 5))
 									return true;
 							}
-							return true;
+							else {
+								return true;
+							}
+
 						}
 					}
 				}

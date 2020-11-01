@@ -50,8 +50,8 @@ void Player::Update(float dt) {
 	movingObject->Update();
 }
 
-void Player::Draw() {
-	movingObject->Draw();
+void Player::Render() {
+	movingObject->Render();
 }
 void Player::Clean(){
 	delete movingObject;

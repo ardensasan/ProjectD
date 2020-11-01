@@ -8,7 +8,7 @@ public:
 	Animation();
 	void SetProperty(std::string id, int width, int height, int animationspeed, SDL_RendererFlip f);
 	void Update();
-	void Draw(int x, int y, int width, int height);
+	void Render(int x, int y, int width, int height);
 	void Clean();
 private:
 	std::string textureID;

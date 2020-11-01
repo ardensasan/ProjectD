@@ -2,6 +2,7 @@
 #define MOVINGOBJECT_H
 #include "GameObject.h"
 #include "Animation.h"
+#include "BoxCollider.h"
 class MovingObject : public GameObject
 {
 public:
@@ -12,7 +13,7 @@ public:
 	inline bool IsOnGround() { return isOnGround; }
 	void SetJump(bool b);
 	virtual void Update();
-	virtual void Draw();
+	virtual void Render();
 	virtual void Clean();
 	void SetTexture(std::string id);
 	bool JumpCollide() { return jumpCollide; }
@@ -24,6 +25,7 @@ protected:
 	SDL_RendererFlip flip;
 private:
 	Animation* animation;
+	BoxCollider* boxColiider;
 	bool jumpCollide;
 	bool isOnGround;
 	int animationDelay;

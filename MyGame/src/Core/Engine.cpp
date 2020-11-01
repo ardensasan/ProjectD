@@ -68,8 +68,10 @@ void Engine::Update() {
 void Engine::Render() {
 	SDL_SetRenderDrawColor(renderer, 100, 100, 100, 50);
 	SDL_RenderClear(renderer);
+	SDL_Texture* texture = IMG_LoadTexture(renderer, "assets/Untitled.png");
+	SDL_RenderCopy(renderer, texture, NULL, NULL);
 	MapParser::GetInstance()->Render();
-	player->Draw();
+	player->Render();
 	SDL_RenderPresent(renderer);
 }
 void Engine::Clean() {
