@@ -18,9 +18,9 @@ void Camera::Set(int width, int height) {
 	cameraView.h = height / 2;
 }
 
-void Camera::Update(int xPosition, int yPosition) {
-	cameraView.x = xPosition - cameraView.w;
-	cameraView.y = yPosition - cameraView.h;
+void Camera::Update(float xPosition, float yPosition) {
+	cameraView.x = int(xPosition - cameraView.w);
+	cameraView.y = int(yPosition - cameraView.h);
 	if (cameraView.x < 0)
 		cameraView.x = 0;
 	if (cameraView.y < 0)

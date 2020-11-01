@@ -1,6 +1,7 @@
 #include "Timer.h"
 #include <SDL.h>
 Timer* Timer::instance = nullptr;
+Uint32 flLastTime;
 Timer::Timer() {
 	flLastTime = 0;
 	flDeltaTime = 1.5f;

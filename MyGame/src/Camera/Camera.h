@@ -6,7 +6,7 @@ class Camera
 public:
 	static Camera* GetInstance();
 	void Set(int width, int height);
-	void Update(int xPosition, int yPosition);
+	void Update(float xPosition, float yPosition);
 	inline SDL_Rect GetCameraView() { return cameraView; };
 private:
 	Camera();

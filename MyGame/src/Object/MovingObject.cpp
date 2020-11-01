@@ -85,7 +85,7 @@ void MovingObject::Update() {
 	animation->Update();
 }
 void MovingObject::Draw(){
-	animation->Draw(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height);
+	animation->Draw(int(objectProperty.xPosition), int(objectProperty.yPosition), objectProperty.width, objectProperty.height);
 }
 void MovingObject::Clean(){
 	delete animation;

@@ -13,6 +13,5 @@ private:
 	Timer();
 	static Timer* instance;
 	float flDeltaTime;
-	float flLastTime;
 };
 #endif
