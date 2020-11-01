@@ -2,8 +2,8 @@
 #include "Input.h"
 #include "Camera.h"
 
-const float MOVELEFT = -3.0f;
-const float MOVERIGHT = 3.0f;
+const float MOVELEFT = -5.0f;
+const float MOVERIGHT = 5.0f;
 Player::Player(std::string id, int width, int height) {
 	movingObject = new MovingObject(id, width, height);
 	direction = 3;
@@ -36,12 +36,12 @@ void Player::Update(float dt) {
 	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_SPACE) && movingObject->IsOnGround()) {
 		direction = 4;
 		movingObject->SetTexture("player_run");
-		yVelocity = -6.0f;
+		yVelocity = -10.0f;
 	}
 	if (movingObject->JumpCollide())
 		yVelocity = 0;
-	if (yVelocity > 4)
-		yVelocity = 4;
+	if (yVelocity > 8)
+		yVelocity = 8;
 	if (yVelocity > 0 && !movingObject->IsOnGround())
 		movingObject->SetTexture("player_fall");
 	if ( yVelocity < 0 && !movingObject->IsOnGround())

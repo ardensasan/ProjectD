@@ -21,54 +21,53 @@ void MovingObject::UpdatePosX(float x) {
 		direction = 3;
 		for (int i = 1; i <= x; i++)
 		{
-			objectProperty.xPosition += i;
-			if (CollisionHandler::GetInstance()->CheckMapCollision(objectProperty)) {
-				objectProperty.xPosition = X;
+			objectProperty.xPosition++;
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(objectProperty,0)) {
+				objectProperty.xPosition--;
 				break;
 			}
-			X = objectProperty.xPosition;
 		}
 	}
 	if (x < 0) {
 		direction = 1;
 		for (int i = (int)x; i < 0; i++)
 		{
-			objectProperty.xPosition += i;
-			if (CollisionHandler::GetInstance()->CheckMapCollision(objectProperty)) {
-				objectProperty.xPosition = X;
+			objectProperty.xPosition--;
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(objectProperty,0)) {
+				objectProperty.xPosition++;
 				break;
 			}
-			X = objectProperty.xPosition;
 		}
 	}
 }
 void MovingObject::UpdatePosY(float y) {
 	jumpCollide = false;
 	float Y = objectProperty.yPosition;
+	int movementDirection = 0;
 	if (y > 0) {
 		isOnGround = false;
+		movementDirection = 4;
 		for (int i = 1; i <= y; i++)
 		{
-			objectProperty.yPosition += i;
-			if (CollisionHandler::GetInstance()->CheckMapCollision(objectProperty, i)) {
-				objectProperty.yPosition = Y;
+			objectProperty.yPosition ++;
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(objectProperty, movementDirection)) {
+				objectProperty.yPosition--;
 				isOnGround = true;
 				break;
 			}
-			Y = objectProperty.yPosition;
 		}
 	}
 	else if (y < 0) {
+		movementDirection = 2;
 		isOnGround = false;
 		for (int i = (int)y; i < 0; i++)
 		{
-			objectProperty.yPosition += i;
-			if (CollisionHandler::GetInstance()->CheckMapCollision(objectProperty, i)) {
-				objectProperty.yPosition = Y;
+			objectProperty.yPosition--;
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(objectProperty, movementDirection)) {
+				objectProperty.yPosition++;
 				jumpCollide = true;
 				break;
 			}
-			Y = objectProperty.yPosition;
 		}
 	}
 }
