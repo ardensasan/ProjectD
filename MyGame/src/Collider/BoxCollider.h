@@ -5,8 +5,9 @@ class BoxCollider
 {
 public:
 	BoxCollider();
-	void Render();
 	void Update(float x, float y, int w, int h);
+	inline SDL_Rect GetBoxCollider() { return objectBox; };
+	void Render();
 private:
 	SDL_Rect objectBox;
 };

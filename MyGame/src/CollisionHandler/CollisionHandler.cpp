@@ -14,8 +14,7 @@ CollisionHandler* CollisionHandler::GetInstance() {
 }
 
 //object to map collision
-bool CollisionHandler::CheckObjectMapCollision(ObjectProperty objProperty, int movementDirection) {
-	SDL_Rect objectRect = { (int)objProperty.xPosition ,(int)objProperty.yPosition , objProperty.width, objProperty.height };
+bool CollisionHandler::CheckObjectMapCollision(SDL_Rect boxCollider, int movementDirection) {
 	tileMapList = MapParser::GetInstance()->GetMapLayers();
 	for (unsigned int t = 0;t < tileMapList.size();t++) {
 		for (int row = 0;row < tileMapList[t].rowCount;row++) {
@@ -26,16 +25,16 @@ bool CollisionHandler::CheckObjectMapCollision(ObjectProperty objProperty, int m
 					//upward movement and x axis collision
 					if (movementDirection == 2 || movementDirection == 0) {
 						if (!isIgnoreTile) {
-							if (SDL_HasIntersection(&objectRect, &tileRect)) {
+							if (SDL_HasIntersection(&boxCollider, &tileRect)) {
 								return true;
 							}
 						}
 					}
 					//downward movement collision
 					else if (movementDirection == 4) {
-						if (SDL_HasIntersection(&objectRect, &tileRect)) {
+						if (SDL_HasIntersection(&boxCollider, &tileRect)) {
 							if (isIgnoreTile) {
-								if ((objProperty.yPosition + objProperty.height) < (tileRect.y + 5))
+								if ((boxCollider.y + boxCollider.h) < (tileRect.y + 5))
 									return true;
 							}
 							else {

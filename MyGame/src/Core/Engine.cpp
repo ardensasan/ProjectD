@@ -39,10 +39,16 @@ void Engine::Init() {
 				bIsRunning = false;
 			}
 			else {
+				//load player assets
 				TextureManager::GetInstance()->Load("player_idle","assets/Player/Idle.png");
 				TextureManager::GetInstance()->Load("player_fall", "assets/Player/Fall.png");
 				TextureManager::GetInstance()->Load("player_jump", "assets/Player/Jump.png");
 				TextureManager::GetInstance()->Load("player_run", "assets/Player/Run.png");
+				//load fruit assets
+				TextureManager::GetInstance()->Load("Apple", "assets/Items/Fruits/Apple.png");
+				TextureManager::GetInstance()->Load("Banana", "assets/Items/Fruits/Banana.png");
+				TextureManager::GetInstance()->Load("Cherry", "assets/Items/Fruits/Cherry.png");
+				TextureManager::GetInstance()->Load("Kiwi", "assets/Items/Fruits/Kiwi.png");
 				Camera::GetInstance()->Set(screenWidth, screenHeight);
 				if (!MapParser::GetInstance()->Load()) {
 					bIsRunning = false;
