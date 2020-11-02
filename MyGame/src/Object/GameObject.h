@@ -5,6 +5,7 @@
 #include <iostream>
 struct ObjectProperty {
 	std::string textureID;
+	std::string type;
 	float xPosition;
 	float yPosition;
 	int width;

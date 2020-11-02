@@ -23,7 +23,8 @@ void MovingObject::UpdatePosX(float x) {
 		for (int i = 1; i <= x; i++)
 		{
 			objectProperty.xPosition++;
-			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(objectProperty,0)) {
+			boxColiider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxColiider->GetBoxCollider(),0)) {
 				objectProperty.xPosition--;
 				break;
 			}
@@ -34,12 +35,14 @@ void MovingObject::UpdatePosX(float x) {
 		for (int i = (int)x; i < 0; i++)
 		{
 			objectProperty.xPosition--;
-			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(objectProperty,0)) {
+			boxColiider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxColiider->GetBoxCollider(),0)) {
 				objectProperty.xPosition++;
 				break;
 			}
 		}
 	}
+	boxColiider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height);
 }
 void MovingObject::UpdatePosY(float y) {
 	jumpCollide = false;
@@ -51,7 +54,8 @@ void MovingObject::UpdatePosY(float y) {
 		for (int i = 1; i <= y; i++)
 		{
 			objectProperty.yPosition ++;
-			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(objectProperty, movementDirection)) {
+			boxColiider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxColiider->GetBoxCollider(), movementDirection)) {
 				objectProperty.yPosition--;
 				isOnGround = true;
 				break;
@@ -64,13 +68,15 @@ void MovingObject::UpdatePosY(float y) {
 		for (int i = (int)y; i < 0; i++)
 		{
 			objectProperty.yPosition--;
-			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(objectProperty, movementDirection)) {
+			boxColiider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxColiider->GetBoxCollider(), movementDirection)) {
 				objectProperty.yPosition++;
 				jumpCollide = true;
 				break;
 			}
 		}
 	}
+	boxColiider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height);
 }
 void MovingObject::SetTexture(std::string id) {
 	if (direction == 3)
