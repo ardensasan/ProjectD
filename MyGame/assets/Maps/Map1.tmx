@@ -50,7 +50,7 @@
   <object id="4" name="Apple" type="Fruit" x="464" y="431" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="4" name="MovingObjects">
-  <object id="16" name="VirtualGuy" type="Player" x="20" y="532" width="32" height="32"/>
-  <object id="17" name="Duck" type="Enemy" x="68" y="532" width="32" height="32"/>
+  <object id="16" name="VirtualGuy" type="Player" x="16.5" y="527" width="32" height="32"/>
+  <object id="17" name="Duck" type="Enemy" x="74" y="527" width="32" height="32"/>
  </objectgroup>
 </map>

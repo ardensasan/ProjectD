@@ -4,8 +4,8 @@
 
 const float MOVELEFT = -5.0f;
 const float MOVERIGHT = 5.0f;
-Player::Player(std::string id, int width, int height) {
-	movingObject = new MovingObject(id, width, height);
+Player::Player(ObjectProperty objectProperty) {
+	movingObject = new MovingObject(objectProperty);
 	direction = 3;
 	gravity = 1;
 	yVelocity = 5.0f;

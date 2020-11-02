@@ -4,12 +4,8 @@
 MovingObject::MovingObject() {
 	isOnGround = false;
 }
-MovingObject::MovingObject(std::string id, int w, int h) {
-	objectProperty.textureID = id;
-	objectProperty.width = w;
-	objectProperty.height = h;
-	objectProperty.xPosition = 100;
-	objectProperty.yPosition = 100;
+MovingObject::MovingObject(ObjectProperty objProp) {
+	objectProperty = objProp;
 	animationDelay = 50;
 	jumpCollide = false;
 	animation = new Animation();

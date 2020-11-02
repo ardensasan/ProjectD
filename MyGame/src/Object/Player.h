@@ -5,7 +5,7 @@
 class Player:public MovingObject
 {
 public:
-	Player(std::string id, int width, int height);
+	Player(ObjectProperty objectProperty);
 	virtual void Update(float dt);
 	virtual void Render();
 	virtual void Clean();

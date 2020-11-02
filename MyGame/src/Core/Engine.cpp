@@ -5,9 +5,10 @@
 #include "Player.h"
 #include "Camera.h"
 #include "CollisionHandler.h"
+#include "ObjectFactory.h"
 #include "Timer.h"
 Engine* Engine::instance = nullptr;
-Player* player;
+GameObject* player;
 Engine::Engine() {
 	bIsRunning = false;
 	window = nullptr;
@@ -55,7 +56,7 @@ void Engine::Init() {
 					MapParser::GetInstance()->Clean();
 				}
 				else {
-					player = new Player("player_idle", 32, 32);
+					player = ObjectFactory::GetInstance()->CreateObject("aw",MapParser::GetInstance()->GetPlayerProperty());
 					bIsRunning = true;
 				}
 				
@@ -74,7 +75,7 @@ void Engine::Update() {
 void Engine::Render() {
 	SDL_SetRenderDrawColor(renderer, 100, 100, 100, 50);
 	SDL_RenderClear(renderer);
-	SDL_Texture* texture = IMG_LoadTexture(renderer, "assets/Untitled.png");
+	SDL_Texture* texture = IMG_LoadTexture(renderer, "assets/bg.png");
 	SDL_RenderCopy(renderer, texture, NULL, NULL);
 	MapParser::GetInstance()->Render();
 	player->Render();

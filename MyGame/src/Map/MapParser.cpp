@@ -68,7 +68,7 @@ std::vector <ObjectProperty> MapParser::ParseObjects(tinyxml2::XMLElement* XMLOb
 	std::vector<ObjectProperty> objPropList;
 	for (tinyxml2::XMLElement* e = XMLObject->FirstChildElement("object");e != nullptr;e = e->NextSiblingElement()) {
 		ObjectProperty objProp;
-		objProp.textureID = e->Attribute("name");
+		objProp.name = e->Attribute("name");
 		objProp.type = e->Attribute("type");
 		objProp.xPosition = atoi(e->Attribute("x"));
 		objProp.yPosition = atoi(e->Attribute("y"));
@@ -125,6 +125,16 @@ TileMap MapParser::ParseTileLayer(tinyxml2::XMLElement* XMLLayer) {
 	return tilemap;
 }
 
+ObjectProperty MapParser::GetPlayerProperty() {
+	std::vector <ObjectProperty>::iterator it;
+	for (it = movingObjectList.begin();it != movingObjectList.end();it++) {
+		if (it->type == "Player") {
+			ObjectProperty objectProperty = *it;
+			it = movingObjectList.erase(it);
+			return objectProperty;
+		}
+	}
+}
 
 void MapParser::Render() {
 	tileparser->Render();
@@ -132,4 +142,6 @@ void MapParser::Render() {
 
 
 void MapParser::Clean() {
+	movingObjectList.clear();
+	staticObjectList.clear();
 }

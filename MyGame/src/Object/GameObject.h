@@ -4,7 +4,7 @@
 #include "SDL.h"
 #include <iostream>
 struct ObjectProperty {
-	std::string textureID;
+	std::string name;
 	std::string type;
 	float xPosition;
 	float yPosition;
@@ -16,9 +16,9 @@ class GameObject:public IObject
 {
 public:
 	GameObject() {}
-	virtual void Update() = 0;
-	virtual void Render() = 0;
-	virtual void Clean() = 0;
+	virtual void Update(float dt) {}
+	virtual void Render() {}
+	virtual void Clean() {}
 private:
 };
 #endif

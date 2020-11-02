@@ -7,7 +7,7 @@ class MovingObject : public GameObject
 {
 public:
 	MovingObject();
-	MovingObject(std::string id, int w, int h);
+	MovingObject(ObjectProperty objProp);
 	void UpdatePosX(float x);
 	void UpdatePosY(float y);
 	inline bool IsOnGround() { return isOnGround; }
