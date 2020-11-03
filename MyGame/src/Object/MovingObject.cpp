@@ -4,15 +4,12 @@
 MovingObject::MovingObject() {
 	isOnGround = false;
 }
-MovingObject::MovingObject(std::string id, int w, int h) {
-	objectProperty.textureID = id;
-	objectProperty.width = w;
-	objectProperty.height = h;
-	objectProperty.xPosition = 100;
-	objectProperty.yPosition = 100;
+MovingObject::MovingObject(ObjectProperty objProp) {
+	objectProperty = objProp;
 	animationDelay = 50;
 	jumpCollide = false;
 	animation = new Animation();
+	boxCollider = new BoxCollider();
 }
 
 void MovingObject::UpdatePosX(float x) {
@@ -22,7 +19,8 @@ void MovingObject::UpdatePosX(float x) {
 		for (int i = 1; i <= x; i++)
 		{
 			objectProperty.xPosition++;
-			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(objectProperty,0)) {
+			boxCollider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height,objectProperty.type);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(),0)) {
 				objectProperty.xPosition--;
 				break;
 			}
@@ -33,12 +31,14 @@ void MovingObject::UpdatePosX(float x) {
 		for (int i = (int)x; i < 0; i++)
 		{
 			objectProperty.xPosition--;
-			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(objectProperty,0)) {
+			boxCollider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height,objectProperty.type);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(),0)) {
 				objectProperty.xPosition++;
 				break;
 			}
 		}
 	}
+	boxCollider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height,objectProperty.type);
 }
 void MovingObject::UpdatePosY(float y) {
 	jumpCollide = false;
@@ -50,7 +50,8 @@ void MovingObject::UpdatePosY(float y) {
 		for (int i = 1; i <= y; i++)
 		{
 			objectProperty.yPosition ++;
-			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(objectProperty, movementDirection)) {
+			boxCollider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height,objectProperty.type);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), movementDirection)) {
 				objectProperty.yPosition--;
 				isOnGround = true;
 				break;
@@ -63,13 +64,15 @@ void MovingObject::UpdatePosY(float y) {
 		for (int i = (int)y; i < 0; i++)
 		{
 			objectProperty.yPosition--;
-			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(objectProperty, movementDirection)) {
+			boxCollider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height,objectProperty.type);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), movementDirection)) {
 				objectProperty.yPosition++;
 				jumpCollide = true;
 				break;
 			}
 		}
 	}
+	boxCollider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height,objectProperty.type);
 }
 void MovingObject::SetTexture(std::string id) {
 	if (direction == 3)
@@ -77,15 +80,17 @@ void MovingObject::SetTexture(std::string id) {
 	else if (direction == 1)
 		flip = SDL_FLIP_HORIZONTAL;
 	else
-		flip = SDL_FLIP_HORIZONTAL;
+		flip = SDL_FLIP_NONE;
 	animation->SetProperty(id, objectProperty.width, objectProperty.height, animationDelay, flip);
 }
 void MovingObject::Update() {
 	Camera::GetInstance()->Update(objectProperty.xPosition, objectProperty.yPosition);
+	boxCollider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height,objectProperty.type);
 	animation->Update();
 }
-void MovingObject::Draw(){
-	animation->Draw(int(objectProperty.xPosition), int(objectProperty.yPosition), objectProperty.width, objectProperty.height);
+void MovingObject::Render(){
+	animation->Render(int(objectProperty.xPosition), int(objectProperty.yPosition), objectProperty.width, objectProperty.height);
+	boxCollider->Render();
 }
 void MovingObject::Clean(){
 	delete animation;

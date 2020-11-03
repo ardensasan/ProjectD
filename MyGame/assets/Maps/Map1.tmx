@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="36" tilewidth="16" tileheight="16" infinite="0" nextlayerid="2" nextobjectid="1">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="36" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="18">
  <tileset firstgid="1" name="Terrain" tilewidth="16" tileheight="16" tilecount="242" columns="22">
   <image source="../Tilesets/Terrain.png" width="352" height="176"/>
  </tileset>
@@ -43,4 +43,13 @@
 26,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,27,24,24,24,24,24,24,24,24,24,24,26,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,27
 </data>
  </layer>
+ <objectgroup id="1" name="StaticObjects">
+  <object id="1" name="Cherry" type="Fruit" x="225" y="208" width="32" height="32"/>
+  <object id="2" name="Banana" type="Fruit" x="224" y="272" width="32" height="32"/>
+  <object id="3" name="Kiwi" type="Fruit" x="225" y="240.5" width="32" height="32"/>
+  <object id="4" name="Apple" type="Fruit" x="464" y="431" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup id="4" name="MovingObjects">
+  <object id="16" name="VirtualGuy" type="Player" x="16.5" y="527" width="32" height="32"/>
+ </objectgroup>
 </map>

@@ -6,7 +6,8 @@ TileParser* tileparser;
 MapParser* MapParser::instance = nullptr;
 GameMap* gamemap;
 MapParser::MapParser() {
-
+	movingObject = "MovingObjects";
+	staticObject = "StaticObjects";
 }
 
 MapParser* MapParser::GetInstance() {
@@ -16,6 +17,8 @@ MapParser* MapParser::GetInstance() {
 }
 
 bool MapParser::Load() {
+	staticObjectList.clear();
+	movingObjectList.clear();
 	return Parse("Map1", "assets/Maps/Map1.tmx");
 }
 
@@ -47,8 +50,35 @@ bool MapParser::Parse(std::string id, std::string source) {
 	gamemap->mapLayers = tilemaps;
 	gamemap->mapLayers = tileparser->Update();
 	//update tilemaps to match tileset properties
+	std::string aw = "";
+	for (tinyxml2::XMLElement* e = root->FirstChildElement();e != nullptr;e = e->NextSiblingElement()) {
+		if (e->Value() == std::string("objectgroup")) {
+			if (e->Attribute("name") == staticObject) {
+				staticObjectList = ParseObjects(e);
+			}
+			else if (e->Attribute("name") == movingObject) {
+				movingObjectList = ParseObjects(e);
+			}
+		}
+	}
 	return true;
 }
+
+std::vector <ObjectProperty> MapParser::ParseObjects(tinyxml2::XMLElement* XMLObject) {
+	std::vector<ObjectProperty> objPropList;
+	for (tinyxml2::XMLElement* e = XMLObject->FirstChildElement("object");e != nullptr;e = e->NextSiblingElement()) {
+		ObjectProperty objProp;
+		objProp.name = e->Attribute("name");
+		objProp.type = e->Attribute("type");
+		objProp.xPosition = atoi(e->Attribute("x"));
+		objProp.yPosition = atoi(e->Attribute("y"));
+		objProp.width = atoi(e->Attribute("width"));
+		objProp.height = atoi(e->Attribute("height"));
+		objPropList.push_back(objProp);
+	}
+	return objPropList;
+}
+
 
 Tileset MapParser::ParseTileset(tinyxml2::XMLElement* XMLTileset) {
 	Tileset tileset;
@@ -101,4 +131,6 @@ void MapParser::Render() {
 
 
 void MapParser::Clean() {
+	movingObjectList.clear();
+	staticObjectList.clear();
 }

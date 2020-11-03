@@ -4,7 +4,8 @@
 #include "SDL.h"
 #include <iostream>
 struct ObjectProperty {
-	std::string textureID;
+	std::string name;
+	std::string type;
 	float xPosition;
 	float yPosition;
 	int width;
@@ -15,9 +16,12 @@ class GameObject:public IObject
 {
 public:
 	GameObject() {}
-	virtual void Update() = 0;
-	virtual void Draw() = 0;
-	virtual void Clean() = 0;
+	virtual bool CheckCollisionToPlayer(SDL_Rect playerCollider) { return false; }
+	virtual void Update(float dt) {}
+	virtual void Render() {}
+	virtual void Clean() {}
+protected:
+	ObjectProperty objectProperty;
 private:
 };
 #endif

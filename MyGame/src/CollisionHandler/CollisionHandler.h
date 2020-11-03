@@ -6,7 +6,7 @@ class CollisionHandler
 {
 public:
 	static CollisionHandler* GetInstance();
-	bool CheckObjectMapCollision(ObjectProperty objProperty, int movemenDirection); // 1 = left, 2 = up, 3 = right, 4 = down
+	bool CheckObjectMapCollision(SDL_Rect boxCollider, int movemenDirection); // 1 = left, 2 = up, 3 = right, 4 = down
 	void Clean();
 private:
 	CollisionHandler();

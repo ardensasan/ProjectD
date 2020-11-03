@@ -2,9 +2,9 @@
 #include "TextureManager.h"
 #include "MapParser.h"
 #include "Input.h"
-#include "Player.h"
 #include "Camera.h"
 #include "CollisionHandler.h"
+#include "ObjectFactory.h"
 #include "Timer.h"
 Engine* Engine::instance = nullptr;
 Player* player;
@@ -39,17 +39,38 @@ void Engine::Init() {
 				bIsRunning = false;
 			}
 			else {
+				//load player assets
 				TextureManager::GetInstance()->Load("player_idle","assets/Player/Idle.png");
 				TextureManager::GetInstance()->Load("player_fall", "assets/Player/Fall.png");
 				TextureManager::GetInstance()->Load("player_jump", "assets/Player/Jump.png");
 				TextureManager::GetInstance()->Load("player_run", "assets/Player/Run.png");
+				//load fruit assets
+				TextureManager::GetInstance()->Load("Apple", "assets/Items/Fruits/Apple.png");
+				TextureManager::GetInstance()->Load("Banana", "assets/Items/Fruits/Banana.png");
+				TextureManager::GetInstance()->Load("Cherry", "assets/Items/Fruits/Cherry.png");
+				TextureManager::GetInstance()->Load("Kiwi", "assets/Items/Fruits/Kiwi.png");
 				Camera::GetInstance()->Set(screenWidth, screenHeight);
 				if (!MapParser::GetInstance()->Load()) {
 					bIsRunning = false;
 					MapParser::GetInstance()->Clean();
 				}
 				else {
-					player = new Player("player_idle", 32, 32);
+					staticObjectList.clear();
+					movingObjectList.clear();
+					std::vector<ObjectProperty> objectPropertyList;
+					objectPropertyList = MapParser::GetInstance()->GetStaticObjects();
+					std::vector<ObjectProperty>::iterator it;
+					for (it = objectPropertyList.begin();it != objectPropertyList.end();it++)
+						staticObjectList.push_back(ObjectFactory::GetInstance()->CreateObject(*it));
+					objectPropertyList.clear();
+					objectPropertyList = MapParser::GetInstance()->GetMovingObjects();
+					for (it = objectPropertyList.begin();it != objectPropertyList.end();it++) {
+						if (it->type == "Player")
+							player = ObjectFactory::GetInstance()->CreateObject(*it);
+						else
+							movingObjectList.push_back(ObjectFactory::GetInstance()->CreateObject(*it));
+					}
+					objectPropertyList.clear();
 					bIsRunning = true;
 				}
 				
@@ -60,16 +81,39 @@ void Engine::Init() {
 void Engine::Events() {
 	Input::GetInstance()->Listen();
 }
+
+int aw = 0;
 void Engine::Update() {
+	aw++;
 	float dt = Timer::GetInstance()->GetDeltaTime();
+	std::vector<GameObject*>::iterator it;
 	player->Update(dt);
+	for (it = staticObjectList.begin();it != staticObjectList.end();it++) {
+		if ((*it)->CheckCollisionToPlayer(player->GetCollider())) {
+			it = staticObjectList.erase(it);
+			if (it >= staticObjectList.end())
+				break;
+		}
+		(*it)->Update(dt);
+	}
+
+	for (it = movingObjectList.begin();it != movingObjectList.end();it++)
+		(*it)->Update(dt);
 	MapParser::GetInstance()->GetMapLayers();
 }
 void Engine::Render() {
 	SDL_SetRenderDrawColor(renderer, 100, 100, 100, 50);
 	SDL_RenderClear(renderer);
+	SDL_Texture* texture = IMG_LoadTexture(renderer, "assets/bg.png");
+	SDL_RenderCopy(renderer, texture, NULL, NULL);
 	MapParser::GetInstance()->Render();
-	player->Draw();
+	std::vector<GameObject*>::iterator it;
+	for (it = staticObjectList.begin();it != staticObjectList.end();it++)
+		(*it)->Render();
+
+	for (it = movingObjectList.begin();it != movingObjectList.end();it++)
+		(*it)->Render();
+	player->Render();
 	SDL_RenderPresent(renderer);
 }
 void Engine::Clean() {
