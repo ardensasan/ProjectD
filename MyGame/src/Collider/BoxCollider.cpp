@@ -14,5 +14,6 @@ SDL_Rect BoxCollider::GetBoxCollider() {
 	return objectBox;
 }
 void BoxCollider::Render(){
+	SDL_SetRenderDrawColor(Engine::GetInstance()->GetRenderer(), 255, 255, 255, 0);
 	SDL_RenderDrawRect(Engine::GetInstance()->GetRenderer(), &objectBox);
 }

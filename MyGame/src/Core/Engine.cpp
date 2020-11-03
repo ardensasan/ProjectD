@@ -102,10 +102,8 @@ void Engine::Update() {
 	MapParser::GetInstance()->GetMapLayers();
 }
 void Engine::Render() {
-	SDL_SetRenderDrawColor(renderer, 100, 100, 100, 50);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
-	SDL_Texture* texture = IMG_LoadTexture(renderer, "assets/bg.png");
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
 	MapParser::GetInstance()->Render();
 	std::vector<GameObject*>::iterator it;
 	for (it = staticObjectList.begin();it != staticObjectList.end();it++)
