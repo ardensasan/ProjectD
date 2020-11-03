@@ -44,13 +44,12 @@
 </data>
  </layer>
  <objectgroup id="1" name="StaticObjects">
-  <object id="1" name="Cherry" type="Fruit" x="224" y="240" width="32" height="32"/>
+  <object id="1" name="Cherry" type="Fruit" x="225" y="208" width="32" height="32"/>
   <object id="2" name="Banana" type="Fruit" x="224" y="272" width="32" height="32"/>
-  <object id="3" name="Kiwi" type="Fruit" x="224" y="208" width="32" height="32"/>
+  <object id="3" name="Kiwi" type="Fruit" x="225" y="240.5" width="32" height="32"/>
   <object id="4" name="Apple" type="Fruit" x="464" y="431" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="4" name="MovingObjects">
   <object id="16" name="VirtualGuy" type="Player" x="16.5" y="527" width="32" height="32"/>
-  <object id="17" name="Duck" type="Enemy" x="74" y="527" width="32" height="32"/>
  </objectgroup>
 </map>

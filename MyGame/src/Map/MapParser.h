@@ -17,8 +17,8 @@ public:
 	TileMap ParseTileLayer(tinyxml2::XMLElement* XMLLayer);
 	std::vector <ObjectProperty> ParseObjects(tinyxml2::XMLElement* XMLObject);
 	std::vector<TileMap> GetMapLayers() { return gamemap->mapLayers; };
-	ObjectProperty GetPlayerProperty();
 	inline std::vector<ObjectProperty> GetStaticObjects() { return staticObjectList; }
+	inline std::vector<ObjectProperty> GetMovingObjects() { return movingObjectList; }
 	void Render();
 	void Clean();
 private:

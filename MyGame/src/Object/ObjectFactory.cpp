@@ -7,6 +7,9 @@ ObjectFactory* ObjectFactory::GetInstance() {
 	return instance;
 }
 
-GameObject* ObjectFactory::CreateObject(std::string className, ObjectProperty objectProperty) {
-	return new Player(objectProperty);
+GameObject* ObjectFactory::CreateObject(ObjectProperty objectProperty) {
+	if(objectProperty.type == "Fruit")
+		return new StaticObject(objectProperty);
+	if (objectProperty.type == "Player")
+		return new Player(objectProperty);
 }

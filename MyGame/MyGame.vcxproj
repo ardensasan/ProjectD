@@ -34,6 +34,7 @@
     <ClInclude Include="src\Object\MovingObject.h" />
     <ClInclude Include="src\Object\ObjectFactory.h" />
     <ClInclude Include="src\Object\Player.h" />
+    <ClInclude Include="src\Object\StaticObject.h" />
     <ClInclude Include="src\Timer\Timer.h" />
     <ClInclude Include="src\Vendor\tinyxml2.h" />
   </ItemGroup>
@@ -53,6 +54,7 @@
     <ClCompile Include="src\Object\Player.cpp" />
     <ClCompile Include="src\Timer\Timer.cpp" />
     <ClCompile Include="src\Vendor\tinyxml2.cpp" />
+    <ClCompile Include="StaticObject.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

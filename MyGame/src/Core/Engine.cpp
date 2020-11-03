@@ -2,13 +2,11 @@
 #include "TextureManager.h"
 #include "MapParser.h"
 #include "Input.h"
-#include "Player.h"
 #include "Camera.h"
 #include "CollisionHandler.h"
 #include "ObjectFactory.h"
 #include "Timer.h"
 Engine* Engine::instance = nullptr;
-GameObject* player;
 Engine::Engine() {
 	bIsRunning = false;
 	window = nullptr;
@@ -56,7 +54,20 @@ void Engine::Init() {
 					MapParser::GetInstance()->Clean();
 				}
 				else {
-					player = ObjectFactory::GetInstance()->CreateObject("aw",MapParser::GetInstance()->GetPlayerProperty());
+					staticObjectList.clear();
+					movingObjectList.clear();
+					std::vector<ObjectProperty> objectPropertyList;
+					objectPropertyList = MapParser::GetInstance()->GetStaticObjects();
+					std::vector<ObjectProperty>::iterator it;
+					for (it = objectPropertyList.begin();it != objectPropertyList.end();it++) {
+							staticObjectList.push_back(ObjectFactory::GetInstance()->CreateObject(*it));
+					}
+					objectPropertyList.clear();
+					objectPropertyList = MapParser::GetInstance()->GetMovingObjects();
+					for (it = objectPropertyList.begin();it != objectPropertyList.end();it++) {
+						movingObjectList.push_back(ObjectFactory::GetInstance()->CreateObject(*it));
+					}
+					objectPropertyList.clear();
 					bIsRunning = true;
 				}
 				
@@ -69,7 +80,12 @@ void Engine::Events() {
 }
 void Engine::Update() {
 	float dt = Timer::GetInstance()->GetDeltaTime();
-	player->Update(dt);
+	std::vector<GameObject*>::iterator it;
+	for (it = staticObjectList.begin();it != staticObjectList.end();it++)
+		(*it)->Update(dt);
+
+	for (it = movingObjectList.begin();it != movingObjectList.end();it++)
+		(*it)->Update(dt);
 	MapParser::GetInstance()->GetMapLayers();
 }
 void Engine::Render() {
@@ -78,7 +94,12 @@ void Engine::Render() {
 	SDL_Texture* texture = IMG_LoadTexture(renderer, "assets/bg.png");
 	SDL_RenderCopy(renderer, texture, NULL, NULL);
 	MapParser::GetInstance()->Render();
-	player->Render();
+	std::vector<GameObject*>::iterator it;
+	for (it = staticObjectList.begin();it != staticObjectList.end();it++)
+		(*it)->Render();
+
+	for (it = movingObjectList.begin();it != movingObjectList.end();it++)
+		(*it)->Render();
 	SDL_RenderPresent(renderer);
 }
 void Engine::Clean() {

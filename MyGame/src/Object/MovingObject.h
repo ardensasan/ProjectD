@@ -17,6 +17,7 @@ public:
 	virtual void Clean();
 	void SetTexture(std::string id);
 	bool JumpCollide() { return jumpCollide; }
+	SDL_Rect GetBoxCollider() { return boxCollider->GetBoxCollider(); }
 protected:
 	float yVelocity,xVelocity;
 	ObjectProperty objectProperty;
@@ -25,7 +26,7 @@ protected:
 	SDL_RendererFlip flip;
 private:
 	Animation* animation;
-	BoxCollider* boxColiider;
+	BoxCollider* boxCollider;
 	bool jumpCollide;
 	bool isOnGround;
 	int animationDelay;

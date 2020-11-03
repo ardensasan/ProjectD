@@ -125,17 +125,6 @@ TileMap MapParser::ParseTileLayer(tinyxml2::XMLElement* XMLLayer) {
 	return tilemap;
 }
 
-ObjectProperty MapParser::GetPlayerProperty() {
-	std::vector <ObjectProperty>::iterator it;
-	for (it = movingObjectList.begin();it != movingObjectList.end();it++) {
-		if (it->type == "Player") {
-			ObjectProperty objectProperty = *it;
-			it = movingObjectList.erase(it);
-			return objectProperty;
-		}
-	}
-}
-
 void MapParser::Render() {
 	tileparser->Render();
 }
