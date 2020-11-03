@@ -7,18 +7,18 @@ StaticObject::StaticObject(ObjectProperty objProp) {
 	animationDelay = 50;
 	animation = new Animation();
 	boxCollider = new BoxCollider();
-	boxCollider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height,objectProperty.type);
 }
 
 void StaticObject::Update(float dt) {
-	//if (SDL_HasIntersection(&player->GetBoxCollider(), &boxCollider->GetBoxCollider())) {
-	//	std::cout << "Piste";
-	//}
+	boxCollider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height, objectProperty.type);
 	animation->SetProperty(objectProperty.name, objectProperty.width, objectProperty.height, 50, SDL_FLIP_NONE);
 	Camera::GetInstance()->Update(objectProperty.xPosition, objectProperty.yPosition);
 	animation->Update();
 }
 
+bool StaticObject::CheckCollisionToPlayer(SDL_Rect playerCollider) {
+	return SDL_HasIntersection(&playerCollider, &boxCollider->GetBoxCollider());
+}
 void StaticObject::Render() {
 	animation->Render(int(objectProperty.xPosition), int(objectProperty.yPosition), objectProperty.width, objectProperty.height);
 	boxCollider->Render();

@@ -24,6 +24,7 @@
     <ClInclude Include="src\Collider\BoxCollider.h" />
     <ClInclude Include="src\CollisionHandler\CollisionHandler.h" />
     <ClInclude Include="src\Core\Engine.h" />
+    <ClInclude Include="src\Enemy\Enemy.h" />
     <ClInclude Include="src\Graphics\TextureManager.h" />
     <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\Map\GameMap.h" />
@@ -45,6 +46,7 @@
     <ClCompile Include="src\Collider\BoxCollider.cpp" />
     <ClCompile Include="src\CollisionHandler\CollisionHandler.cpp" />
     <ClCompile Include="src\Core\Engine.cpp" />
+    <ClCompile Include="src\Enemy\Enemy.cpp" />
     <ClCompile Include="src\Graphics\TextureManager.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Map\MapParser.cpp" />

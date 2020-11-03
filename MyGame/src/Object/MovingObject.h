@@ -13,14 +13,14 @@ public:
 	inline bool IsOnGround() { return isOnGround; }
 	void SetJump(bool b);
 	virtual void Update();
+	virtual bool CheckCollisionToPlayer(SDL_Rect playerCollider) { return false; }
+	virtual SDL_Rect GetCollider() { return boxCollider->GetBoxCollider(); }
 	virtual void Render();
 	virtual void Clean();
 	void SetTexture(std::string id);
 	bool JumpCollide() { return jumpCollide; }
-	SDL_Rect GetBoxCollider() { return boxCollider->GetBoxCollider(); }
 protected:
 	float yVelocity,xVelocity;
-	ObjectProperty objectProperty;
 	int direction; // 1=left 2=up 3=right 4=down
 	float gravity;
 	SDL_RendererFlip flip;

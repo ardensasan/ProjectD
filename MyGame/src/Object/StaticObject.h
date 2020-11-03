@@ -10,9 +10,10 @@ public:
 	StaticObject();
 	StaticObject(ObjectProperty objProp);
 	virtual void Update(float dt);
+	virtual bool CheckCollisionToPlayer(SDL_Rect playerCollider);
 	virtual void Render();
 	virtual void Clean();
-	SDL_Rect GetBoxCollider() { return boxCollider->GetBoxCollider(); }
+	virtual SDL_Rect GetCollider() { return boxCollider->GetBoxCollider(); }
 private:
 	Animation* animation;
 	BoxCollider* boxCollider;

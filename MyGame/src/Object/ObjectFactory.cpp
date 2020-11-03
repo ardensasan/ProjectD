@@ -6,7 +6,6 @@ ObjectFactory* ObjectFactory::GetInstance() {
 		instance = new ObjectFactory();
 	return instance;
 }
-
 GameObject* ObjectFactory::CreateObject(ObjectProperty objectProperty) {
 	if(objectProperty.type == "Fruit")
 		return new StaticObject(objectProperty);
