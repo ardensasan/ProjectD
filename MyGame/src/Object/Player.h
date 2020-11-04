@@ -6,13 +6,13 @@ class Player:public MovingObject
 {
 public:
 	Player(ObjectProperty objectProperty);
-	void UpdatePosX(float x);
-	void UpdatePosY(float y);
 	virtual void Update(float dt);
+	virtual bool CheckCollisionToObject(SDL_Rect objectCollider);
 	virtual SDL_Rect GetCollider() { return movingObject->GetCollider(); }
 	virtual void Render();
 	virtual void Clean();
 private:
+	int isHitCD;
 	MovingObject* movingObject;
 };
 #endif

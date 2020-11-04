@@ -24,6 +24,7 @@
     <ClInclude Include="src\Collider\BoxCollider.h" />
     <ClInclude Include="src\CollisionHandler\CollisionHandler.h" />
     <ClInclude Include="src\Core\Engine.h" />
+    <ClInclude Include="src\Enemy\Enemy.h" />
     <ClInclude Include="src\Graphics\TextureManager.h" />
     <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\Map\GameMap.h" />
@@ -45,6 +46,7 @@
     <ClCompile Include="src\Collider\BoxCollider.cpp" />
     <ClCompile Include="src\CollisionHandler\CollisionHandler.cpp" />
     <ClCompile Include="src\Core\Engine.cpp" />
+    <ClCompile Include="src\Enemy\Enemy.cpp" />
     <ClCompile Include="src\Graphics\TextureManager.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Map\MapParser.cpp" />
@@ -128,7 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\Dev\MyGame\MyGame\src\Collider;D:\Dev\SDL2_ttf\SDL2_ttf-2.0.15\include;D:\Dev\SDL2_image\SDL2_image-2.0.5\include;D:\Dev\SDL2\SDL2-2.0.12\include;D:\Dev\MyGame\MyGame\src\Vendor;D:\Dev\MyGame\MyGame\src\Timer;D:\Dev\MyGame\MyGame\src\Object;D:\Dev\MyGame\MyGame\src\Map;D:\Dev\MyGame\MyGame\src\Input;D:\Dev\MyGame\MyGame\src\Graphics;D:\Dev\MyGame\MyGame\src\Core;D:\Dev\MyGame\MyGame\src\CollisionHandler;D:\Dev\MyGame\MyGame\src\Camera;D:\Dev\MyGame\MyGame\src\Animation</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Dev\MyGame\MyGame\src\Enemy;D:\Dev\MyGame\MyGame\src\Collider;D:\Dev\SDL2_ttf\SDL2_ttf-2.0.15\include;D:\Dev\SDL2_image\SDL2_image-2.0.5\include;D:\Dev\SDL2\SDL2-2.0.12\include;D:\Dev\MyGame\MyGame\src\Vendor;D:\Dev\MyGame\MyGame\src\Timer;D:\Dev\MyGame\MyGame\src\Object;D:\Dev\MyGame\MyGame\src\Map;D:\Dev\MyGame\MyGame\src\Input;D:\Dev\MyGame\MyGame\src\Graphics;D:\Dev\MyGame\MyGame\src\Core;D:\Dev\MyGame\MyGame\src\CollisionHandler;D:\Dev\MyGame\MyGame\src\Camera;D:\Dev\MyGame\MyGame\src\Animation</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -146,7 +148,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\Dev\MyGame\MyGame\src\Collider;D:\Dev\SDL2_ttf\SDL2_ttf-2.0.15\include;D:\Dev\SDL2_image\SDL2_image-2.0.5\include;D:\Dev\SDL2\SDL2-2.0.12\include;D:\Dev\MyGame\MyGame\src\Vendor;D:\Dev\MyGame\MyGame\src\Timer;D:\Dev\MyGame\MyGame\src\Object;D:\Dev\MyGame\MyGame\src\Map;D:\Dev\MyGame\MyGame\src\Input;D:\Dev\MyGame\MyGame\src\Graphics;D:\Dev\MyGame\MyGame\src\Core;D:\Dev\MyGame\MyGame\src\CollisionHandler;D:\Dev\MyGame\MyGame\src\Camera;D:\Dev\MyGame\MyGame\src\Animation</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Dev\MyGame\MyGame\src\Enemy;D:\Dev\MyGame\MyGame\src\Collider;D:\Dev\SDL2_ttf\SDL2_ttf-2.0.15\include;D:\Dev\SDL2_image\SDL2_image-2.0.5\include;D:\Dev\SDL2\SDL2-2.0.12\include;D:\Dev\MyGame\MyGame\src\Vendor;D:\Dev\MyGame\MyGame\src\Timer;D:\Dev\MyGame\MyGame\src\Object;D:\Dev\MyGame\MyGame\src\Map;D:\Dev\MyGame\MyGame\src\Input;D:\Dev\MyGame\MyGame\src\Graphics;D:\Dev\MyGame\MyGame\src\Core;D:\Dev\MyGame\MyGame\src\CollisionHandler;D:\Dev\MyGame\MyGame\src\Camera;D:\Dev\MyGame\MyGame\src\Animation</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>

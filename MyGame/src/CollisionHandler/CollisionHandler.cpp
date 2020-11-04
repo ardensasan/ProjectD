@@ -34,7 +34,7 @@ bool CollisionHandler::CheckObjectMapCollision(SDL_Rect boxCollider, int movemen
 					else if (movementDirection == 4) {
 						if (SDL_HasIntersection(&boxCollider, &tileRect)) {
 							if (isIgnoreTile) {
-								if ((boxCollider.y + boxCollider.h) < (tileRect.y + 5))
+								if ((boxCollider.y + boxCollider.h) < (tileRect.y + 2))
 									return true;
 							}
 							else {

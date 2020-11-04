@@ -11,4 +11,6 @@ GameObject* ObjectFactory::CreateObject(ObjectProperty objectProperty) {
 		return new StaticObject(objectProperty);
 	if (objectProperty.type == "Player")
 		return new Player(objectProperty);
+	if (objectProperty.type == "Enemy")
+		return new Enemy(objectProperty);
 }

@@ -70,8 +70,8 @@ std::vector <ObjectProperty> MapParser::ParseObjects(tinyxml2::XMLElement* XMLOb
 		ObjectProperty objProp;
 		objProp.name = e->Attribute("name");
 		objProp.type = e->Attribute("type");
-		objProp.xPosition = atoi(e->Attribute("x"));
-		objProp.yPosition = atoi(e->Attribute("y"));
+		objProp.xPosition = float(atoi(e->Attribute("x")));
+		objProp.yPosition = float(atoi(e->Attribute("y")));
 		objProp.width = atoi(e->Attribute("width"));
 		objProp.height = atoi(e->Attribute("height"));
 		objPropList.push_back(objProp);

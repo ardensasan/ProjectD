@@ -9,6 +9,8 @@ void BoxCollider::Update(float x, float y, int w, int h,std::string type){
 		objectBox = { int(x)+5, int(y)+5, w-10, h-5 };
 	if(type == "Fruit")
 		objectBox = { int(x) + 7, int(y) + 5, w - 14, h - 12 };
+	if (type == "Enemy")
+		objectBox = { int(x), int(y), w, h};
 }
 SDL_Rect BoxCollider::GetBoxCollider() {
 	return objectBox;
