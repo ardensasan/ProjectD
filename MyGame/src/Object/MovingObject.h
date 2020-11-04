@@ -13,22 +13,26 @@ public:
 	inline bool IsOnGround() { return isOnGround; }
 	void SetJump(bool b);
 	virtual void Update();
-	virtual bool CheckCollisionToPlayer(SDL_Rect playerCollider) { return false; }
+	virtual bool CheckCollisionToObject(SDL_Rect objectCollider) { return false; }
 	virtual SDL_Rect GetCollider() { return boxCollider->GetBoxCollider(); }
 	virtual void Render();
 	virtual void Clean();
 	void SetTexture(std::string id);
 	bool JumpCollide() { return jumpCollide; }
+	void SetIsHit(bool b) { isHit = b; }
+	inline bool IsHit() { return isHit; }
 protected:
-	float yVelocity,xVelocity;
-	int direction; // 1=left 2=up 3=right 4=down
+	float yVelocity,xVelocity;  // 1=left 2=up 3=right 4=down
 	float gravity;
-	SDL_RendererFlip flip;
+	int direction;
 private:
+	SDL_RendererFlip flip;
 	Animation* animation;
 	BoxCollider* boxCollider;
 	bool jumpCollide;
 	bool isOnGround;
 	int animationDelay;
+	bool isHit;
+	int isHitCD; // cooldown before object can be hit again
 };
 #endif

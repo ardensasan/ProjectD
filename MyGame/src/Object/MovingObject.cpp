@@ -7,7 +7,9 @@ MovingObject::MovingObject() {
 MovingObject::MovingObject(ObjectProperty objProp) {
 	objectProperty = objProp;
 	animationDelay = 50;
+	isHitCD = 0;
 	jumpCollide = false;
+	isHit = false;
 	animation = new Animation();
 	boxCollider = new BoxCollider();
 }
@@ -75,6 +77,14 @@ void MovingObject::UpdatePosY(float y) {
 	boxCollider->Update(objectProperty.xPosition, objectProperty.yPosition, objectProperty.width, objectProperty.height,objectProperty.type);
 }
 void MovingObject::SetTexture(std::string id) {
+	if (isHit) {
+		id = objectProperty.name+"_hit";
+		isHitCD++;
+		if (isHitCD > 200) {
+			isHitCD = 0;
+			isHit = false;
+		}
+	}
 	if (direction == 3)
 		flip = SDL_FLIP_NONE;
 	else if (direction == 1)

@@ -16,7 +16,7 @@ void StaticObject::Update(float dt) {
 	animation->Update();
 }
 
-bool StaticObject::CheckCollisionToPlayer(SDL_Rect playerCollider) {
+bool StaticObject::CheckCollisionToObject(SDL_Rect playerCollider) {
 	return SDL_HasIntersection(&playerCollider, &boxCollider->GetBoxCollider());
 }
 void StaticObject::Render() {

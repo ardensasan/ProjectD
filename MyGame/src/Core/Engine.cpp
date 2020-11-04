@@ -44,11 +44,17 @@ void Engine::Init() {
 				TextureManager::GetInstance()->Load("player_fall", "assets/Player/Fall.png");
 				TextureManager::GetInstance()->Load("player_jump", "assets/Player/Jump.png");
 				TextureManager::GetInstance()->Load("player_run", "assets/Player/Run.png");
+				TextureManager::GetInstance()->Load("VirtualGuy_hit", "assets/Player/Hit.png");
 				//load fruit assets
 				TextureManager::GetInstance()->Load("Apple", "assets/Items/Fruits/Apple.png");
 				TextureManager::GetInstance()->Load("Banana", "assets/Items/Fruits/Banana.png");
 				TextureManager::GetInstance()->Load("Cherry", "assets/Items/Fruits/Cherry.png");
 				TextureManager::GetInstance()->Load("Kiwi", "assets/Items/Fruits/Kiwi.png");
+				TextureManager::GetInstance()->Load("Melon", "assets/Items/Fruits/Melon.png");
+				//load enemy assets
+				TextureManager::GetInstance()->Load("AngryPig_idle", "assets/Enemies/AngryPig/Idle (36x30).png");
+				TextureManager::GetInstance()->Load("Chicken_idle", "assets/Enemies/Chicken/Idle (32x34).png");
+				TextureManager::GetInstance()->Load("Bunny_idle", "assets/Enemies/Bunny/Idle (34x44).png");
 				Camera::GetInstance()->Set(screenWidth, screenHeight);
 				if (!MapParser::GetInstance()->Load()) {
 					bIsRunning = false;
@@ -89,7 +95,7 @@ void Engine::Update() {
 	std::vector<GameObject*>::iterator it;
 	player->Update(dt);
 	for (it = staticObjectList.begin();it != staticObjectList.end();it++) {
-		if ((*it)->CheckCollisionToPlayer(player->GetCollider())) {
+		if ((*it)->CheckCollisionToObject(player->GetCollider())) {
 			it = staticObjectList.erase(it);
 			if (it >= staticObjectList.end())
 				break;
@@ -97,15 +103,15 @@ void Engine::Update() {
 		(*it)->Update(dt);
 	}
 
-	for (it = movingObjectList.begin();it != movingObjectList.end();it++)
+	for (it = movingObjectList.begin();it != movingObjectList.end();it++) {
+		player->CheckCollisionToObject((*it)->GetCollider());
 		(*it)->Update(dt);
+	}
 	MapParser::GetInstance()->GetMapLayers();
 }
 void Engine::Render() {
-	SDL_SetRenderDrawColor(renderer, 100, 100, 100, 50);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
-	SDL_Texture* texture = IMG_LoadTexture(renderer, "assets/bg.png");
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
 	MapParser::GetInstance()->Render();
 	std::vector<GameObject*>::iterator it;
 	for (it = staticObjectList.begin();it != staticObjectList.end();it++)

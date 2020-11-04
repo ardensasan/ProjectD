@@ -16,7 +16,7 @@ class GameObject:public IObject
 {
 public:
 	GameObject() {}
-	virtual bool CheckCollisionToPlayer(SDL_Rect playerCollider) { return false; }
+	virtual bool CheckCollisionToObject(SDL_Rect objectCollider) { return false; }
 	virtual void Update(float dt) {}
 	virtual void Render() {}
 	virtual void Clean() {}
