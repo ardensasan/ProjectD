@@ -50,6 +50,7 @@ void Engine::Init() {
 				TextureManager::GetInstance()->Load("Banana", "assets/Items/Fruits/Banana.png");
 				TextureManager::GetInstance()->Load("Cherry", "assets/Items/Fruits/Cherry.png");
 				TextureManager::GetInstance()->Load("Kiwi", "assets/Items/Fruits/Kiwi.png");
+				TextureManager::GetInstance()->Load("Melon", "assets/Items/Fruits/Melon.png");
 				//load enemy assets
 				TextureManager::GetInstance()->Load("AngryPig_idle", "assets/Enemies/AngryPig/Idle (36x30).png");
 				TextureManager::GetInstance()->Load("Chicken_idle", "assets/Enemies/Chicken/Idle (32x34).png");
