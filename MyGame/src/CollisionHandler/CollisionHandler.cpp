@@ -23,7 +23,7 @@ bool CollisionHandler::CheckObjectMapCollision(SDL_Rect boxCollider, int movemen
 					SDL_Rect tileRect = { (row * tileMapList[t].tileWidth) + 1, (col * tileMapList[t].tileHeight) + 1, tileMapList[t].tileWidth - 1, tileMapList[t].tileHeight - 1 };
 					bool isIgnoreTile = std::find(std::begin(ignoreTile), std::end(ignoreTile), tileMapList[t].tileMap[row][col]) != std::end(ignoreTile);
 					//upward movement and x axis collision
-					if (movementDirection == 2 || movementDirection == 0) {
+					if (movementDirection == 0 || movementDirection == 2) {
 						if (!isIgnoreTile) {
 							if (SDL_HasIntersection(&boxCollider, &tileRect)) {
 								return true;
@@ -34,7 +34,7 @@ bool CollisionHandler::CheckObjectMapCollision(SDL_Rect boxCollider, int movemen
 					else if (movementDirection == 4) {
 						if (SDL_HasIntersection(&boxCollider, &tileRect)) {
 							if (isIgnoreTile) {
-								if ((boxCollider.y + boxCollider.h) < (tileRect.y + 2))
+								if ((boxCollider.y + boxCollider.h) < (tileRect.y + 4))
 									return true;
 							}
 							else {
@@ -50,6 +50,9 @@ bool CollisionHandler::CheckObjectMapCollision(SDL_Rect boxCollider, int movemen
 	return false;
 }
 
+bool CollisionHandler::CheckCollisionToObject(SDL_Rect playerRect, SDL_Rect objectRect) {
+	return SDL_HasIntersection(&playerRect, &objectRect);
+}
 void CollisionHandler::Clean() {
 	tileMapList.clear();
 }

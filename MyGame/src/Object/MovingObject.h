@@ -1,38 +1,21 @@
 #ifndef MOVINGOBJECT_H
 #define MOVINGOBJECT_H
 #include "GameObject.h"
-#include "Animation.h"
-#include "BoxCollider.h"
-class MovingObject : public GameObject
+class MovingObject:public GameObject
 {
 public:
-	MovingObject();
-	MovingObject(ObjectProperty objProp);
-	void UpdatePosX(float x);
-	void UpdatePosY(float y);
-	inline bool IsOnGround() { return isOnGround; }
-	void SetJump(bool b);
-	virtual void Update();
-	virtual bool CheckCollisionToObject(SDL_Rect objectCollider) { return false; }
-	virtual SDL_Rect GetCollider() { return boxCollider->GetBoxCollider(); }
-	virtual void Render();
-	virtual void Clean();
-	void SetTexture(std::string id);
-	bool JumpCollide() { return jumpCollide; }
-	void SetIsHit(bool b) { isHit = b; }
-	inline bool IsHit() { return isHit; }
+	MovingObject() {}
+	virtual void Update(float dt) = 0;
+	virtual SDL_Rect GetCollider() = 0;
+	virtual void CollisionToObject(SDL_Rect enemyBox, float dt) = 0;
+	virtual bool IsHit() = 0;
+	virtual void Render() = 0;
+	virtual void Clean() = 0;
 protected:
-	float yVelocity,xVelocity;  // 1=left 2=up 3=right 4=down
-	float gravity;
-	int direction;
-private:
-	SDL_RendererFlip flip;
-	Animation* animation;
-	BoxCollider* boxCollider;
-	bool jumpCollide;
-	bool isOnGround;
-	int animationDelay;
 	bool isHit;
-	int isHitCD; // cooldown before object can be hit again
+	int isHitCD; //cool down before object can be hit again
+	float xVelocity,yVelocity;
+	ObjectProperty objectProperty;
 };
 #endif
+

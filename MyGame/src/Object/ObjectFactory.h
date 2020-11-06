@@ -8,6 +8,7 @@ class ObjectFactory
 public:
 	static ObjectFactory* GetInstance();
 	GameObject* CreateObject(ObjectProperty objectProperty);
+	MovingObject* CreateMovingObject(ObjectProperty objectProperty);
 private:
 	ObjectFactory();
 	static ObjectFactory* instance;

@@ -1,78 +1,133 @@
 #include "Player.h"
 #include "Input.h"
 #include "Camera.h"
-
-const float MOVELEFT = -5.0f;
-const float MOVERIGHT = 5.0f;
+#include "CollisionHandler.h"
+const float MOVEX = 4.0f;
+const float MOVEHIT = -10.0f;
 const float JUMP = -8.0f;
-Player::Player(ObjectProperty objectProperty) {
-	movingObject = new MovingObject(objectProperty);
-	gravity = 1;
-	yVelocity = 5.0f;
-	xVelocity = 0;
-	isHitCD = 0;
-	direction = 1;
+Player::Player(ObjectProperty objProp) {
+	objectProperty = objProp;
+	direction = 3;
+	animation = new Animation(objectProperty.width, objectProperty.height);
+	boxCollider = new BoxCollider();
+	yVelocity = 1;
+	isHit = false;
+	isHitCD = 200;
 }
 
 void Player::Update(float dt) {
-	if (yVelocity < 0) {
-		yVelocity += 0.5f;
-	}
-	else {
-		yVelocity++;
-	}
-	movingObject->SetTexture("player_idle");
+	if (direction == 1)
+		flip = SDL_FLIP_NONE;
+	else if (direction == -1)
+		flip = SDL_FLIP_HORIZONTAL;
+
+	yVelocity+=0.5f;
+	animation->SetProperty(objectProperty.name+"_idle", flip);
 	//move left
-	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_A) && xVelocity == 0) {
-		direction = 1;
-		movingObject->UpdatePosX(MOVELEFT * dt);
-		movingObject->SetTexture("player_run");
+	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_A) && isHitCD > 50) {
+		direction = -1;
+		animation->SetProperty(objectProperty.name + "_run", flip);
+		MoveXPosition(dt, MOVEX * direction);
 	}
 	//move right
-	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_D) && xVelocity == 0) {
-		direction = 3;
-		movingObject->UpdatePosX(MOVERIGHT * dt);
-		movingObject->SetTexture("player_run");
+	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_D) && isHitCD > 50) {
+		direction = 1;
+		animation->SetProperty(objectProperty.name + "_run", flip);
+		MoveXPosition(dt, MOVEX * direction);
 	}
-	//space 
-	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_SPACE) && movingObject->IsOnGround()) {
-		movingObject->SetTexture("player_run");
+	//jump
+	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_SPACE) && isOnGround && isHitCD > 50) {
 		yVelocity = JUMP;
 	}
-	if (movingObject->JumpCollide())
-		yVelocity = 0;
-	if (yVelocity > 8)
+	if (yVelocity > 8) {
 		yVelocity = 8;
-
+	}
+	if(yVelocity < 0)
+		animation->SetProperty(objectProperty.name + "_jump", flip);
+	if(yVelocity >= 0 && !isOnGround)
+		animation->SetProperty(objectProperty.name + "_fall", flip);
+	if (isHit) {
+		animation->SetProperty(objectProperty.name + "_hit", flip);
+		isHitCD++;
+		if (isHitCD >= 150)
+			isHit = false;
+	}
 	if (xVelocity > 0)
-		xVelocity--;
-	if (xVelocity < 0)
-		xVelocity++;
-	if (yVelocity > 0 && !movingObject->IsOnGround())
-		movingObject->SetTexture("player_fall");
-	if (yVelocity < 0 && !movingObject->IsOnGround())
-		movingObject->SetTexture("player_jump");
-
-
-	movingObject->UpdatePosX(xVelocity * dt);
-	movingObject->UpdatePosY(yVelocity * dt);
-	movingObject->Update();
+		xVelocity-=0.5f;
+	else if (xVelocity < 0)
+		xVelocity+=0.5f;
+	MoveXPosition(dt, xVelocity * dt);
+	MoveYPosition(dt);
+	animation->Update();
 }
 
-bool Player::CheckCollisionToObject(SDL_Rect objectCollider) {
-	if (SDL_HasIntersection(&movingObject->GetCollider(), &objectCollider) && !movingObject->IsHit()) {
-		if (direction == 1)
-			xVelocity = 12.0f;
-		if (direction == 3)
-			xVelocity = -12.0f;
-		movingObject->SetIsHit(true);
+void Player::MoveXPosition(float dt, float x) {
+	if (x > 0) {
+		for (int i = 0; i < (int)x; i++)
+		{
+			objectProperty.xPosition += dt;
+			boxCollider->Update(objectProperty);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 0)) {
+				objectProperty.xPosition -= dt;
+				break;
+			}
+		}
 	}
-	return true;
+	if (x < 0) {
+		for (int i = (int)x; i < 0; i++)
+		{
+			objectProperty.xPosition -= dt;
+			boxCollider->Update(objectProperty);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 0)) {
+				objectProperty.xPosition += dt;
+				break;
+			}
+		}
+	}
+}
+
+void Player::MoveYPosition(float dt) {
+	isOnGround = false;
+	float y = yVelocity;
+	if (y > 0) {
+		for (int i = 0; i < (int)y; i++)
+		{
+			objectProperty.yPosition += dt;
+			boxCollider->Update(objectProperty);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 4)) {
+				objectProperty.yPosition -= dt;
+				isOnGround = true;
+				break;
+			}
+		}
+	}
+	else if (y < 0) {
+		for (int i = (int)y; i < 0; i++)
+		{
+			objectProperty.yPosition -= dt;
+			boxCollider->Update(objectProperty);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 2)) {
+				yVelocity = 0;
+				objectProperty.yPosition +=  dt;
+				break;
+			}
+		}
+	}
+}
+//check if player hits an enemy
+void Player::CollisionToObject(SDL_Rect enemyBox, float dt) {
+	if (CollisionHandler::GetInstance()->CheckCollisionToObject(boxCollider->GetBoxCollider(), enemyBox)) {
+		isHit = true;
+		isHitCD = 0;
+		xVelocity = MOVEHIT*direction;
+	}
 }
 
 void Player::Render() {
-	movingObject->Render();
+	animation->Render((int)objectProperty.xPosition, (int)objectProperty.yPosition);
+	boxCollider->Render();
 }
 void Player::Clean(){
-	delete movingObject;
+	delete animation;
+	delete boxCollider;
 }

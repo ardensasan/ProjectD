@@ -4,13 +4,13 @@ BoxCollider::BoxCollider() {
 	objectBox = { 0,0,0,0 };
 }
 
-void BoxCollider::Update(float x, float y, int w, int h,std::string type){
-	if(type == "Player")
-		objectBox = { int(x)+5, int(y)+5, w-10, h-5 };
-	if(type == "Fruit")
-		objectBox = { int(x) + 7, int(y) + 5, w - 14, h - 12 };
-	if (type == "Enemy")
-		objectBox = { int(x), int(y), w, h};
+void BoxCollider::Update(ObjectProperty objProp){
+	if(objProp.type == "Player")
+		objectBox = { int(objProp.xPosition)+5, int(objProp.yPosition)+5, objProp.width-10, objProp.height-5 };
+	if(objProp.type == "Fruit")
+		objectBox = { int(objProp.xPosition) + 7, int(objProp.yPosition) + 5, objProp.width - 14, objProp.height - 12 };
+	if (objProp.type == "Enemy")
+		objectBox = { int(objProp.xPosition), int(objProp.yPosition), objProp.width, objProp.height };
 }
 SDL_Rect BoxCollider::GetBoxCollider() {
 	return objectBox;

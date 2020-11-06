@@ -16,10 +16,10 @@ class GameObject:public IObject
 {
 public:
 	GameObject() {}
-	virtual bool CheckCollisionToObject(SDL_Rect objectCollider) { return false; }
-	virtual void Update(float dt) {}
-	virtual void Render() {}
-	virtual void Clean() {}
+	virtual void Update(float dt) = 0;
+	virtual SDL_Rect GetCollider() = 0;
+	virtual void Render() = 0;
+	virtual void Clean() = 0;
 protected:
 	ObjectProperty objectProperty;
 private:

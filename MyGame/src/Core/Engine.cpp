@@ -7,7 +7,6 @@
 #include "ObjectFactory.h"
 #include "Timer.h"
 Engine* Engine::instance = nullptr;
-Player* player;
 Engine::Engine() {
 	bIsRunning = false;
 	window = nullptr;
@@ -40,10 +39,10 @@ void Engine::Init() {
 			}
 			else {
 				//load player assets
-				TextureManager::GetInstance()->Load("player_idle","assets/Player/Idle.png");
-				TextureManager::GetInstance()->Load("player_fall", "assets/Player/Fall.png");
-				TextureManager::GetInstance()->Load("player_jump", "assets/Player/Jump.png");
-				TextureManager::GetInstance()->Load("player_run", "assets/Player/Run.png");
+				TextureManager::GetInstance()->Load("VirtualGuy_idle","assets/Player/Idle.png");
+				TextureManager::GetInstance()->Load("VirtualGuy_fall", "assets/Player/Fall.png");
+				TextureManager::GetInstance()->Load("VirtualGuy_jump", "assets/Player/Jump.png");
+				TextureManager::GetInstance()->Load("VirtualGuy_run", "assets/Player/Run.png");
 				TextureManager::GetInstance()->Load("VirtualGuy_hit", "assets/Player/Hit.png");
 				//load fruit assets
 				TextureManager::GetInstance()->Load("Apple", "assets/Items/Fruits/Apple.png");
@@ -53,7 +52,9 @@ void Engine::Init() {
 				TextureManager::GetInstance()->Load("Melon", "assets/Items/Fruits/Melon.png");
 				//load enemy assets
 				TextureManager::GetInstance()->Load("AngryPig_idle", "assets/Enemies/AngryPig/Idle (36x30).png");
+				TextureManager::GetInstance()->Load("AngryPig_run", "assets/Enemies/AngryPig/Run (36x30).png");
 				TextureManager::GetInstance()->Load("Chicken_idle", "assets/Enemies/Chicken/Idle (32x34).png");
+				TextureManager::GetInstance()->Load("Chicken_run", "assets/Enemies/Chicken/Run (32x34).png");
 				TextureManager::GetInstance()->Load("Bunny_idle", "assets/Enemies/Bunny/Idle (34x44).png");
 				Camera::GetInstance()->Set(screenWidth, screenHeight);
 				if (!MapParser::GetInstance()->Load()) {
@@ -72,9 +73,9 @@ void Engine::Init() {
 					objectPropertyList = MapParser::GetInstance()->GetMovingObjects();
 					for (it = objectPropertyList.begin();it != objectPropertyList.end();it++) {
 						if (it->type == "Player")
-							player = ObjectFactory::GetInstance()->CreateObject(*it);
+							player = ObjectFactory::GetInstance()->CreateMovingObject(*it);
 						else
-							movingObjectList.push_back(ObjectFactory::GetInstance()->CreateObject(*it));
+							movingObjectList.push_back(ObjectFactory::GetInstance()->CreateMovingObject(*it));
 					}
 					objectPropertyList.clear();
 					bIsRunning = true;
@@ -83,31 +84,32 @@ void Engine::Init() {
 			}
 		}
 	}
+	return;
 }
 void Engine::Events() {
 	Input::GetInstance()->Listen();
 }
 
-int aw = 0;
 void Engine::Update() {
-	aw++;
 	float dt = Timer::GetInstance()->GetDeltaTime();
 	std::vector<GameObject*>::iterator it;
 	player->Update(dt);
 	for (it = staticObjectList.begin();it != staticObjectList.end();it++) {
-		if ((*it)->CheckCollisionToObject(player->GetCollider())) {
+		(*it)->Update(dt);
+		if (CollisionHandler::GetInstance()->CheckCollisionToObject(player->GetCollider(), (*it)->GetCollider())) {
 			it = staticObjectList.erase(it);
 			if (it >= staticObjectList.end())
 				break;
 		}
-		(*it)->Update(dt);
 	}
-
-	for (it = movingObjectList.begin();it != movingObjectList.end();it++) {
-		player->CheckCollisionToObject((*it)->GetCollider());
-		(*it)->Update(dt);
+	std::vector<MovingObject*>::iterator it2;
+	for (it2 = movingObjectList.begin();it2 != movingObjectList.end();it2++) {
+		(*it2)->Update(dt);
+		if(!player->IsHit())
+			player->CollisionToObject((*it2)->GetCollider(),dt);
 	}
 	MapParser::GetInstance()->GetMapLayers();
+	return;
 }
 void Engine::Render() {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
@@ -117,10 +119,12 @@ void Engine::Render() {
 	for (it = staticObjectList.begin();it != staticObjectList.end();it++)
 		(*it)->Render();
 
-	for (it = movingObjectList.begin();it != movingObjectList.end();it++)
-		(*it)->Render();
+	std::vector<MovingObject*>::iterator it2;
+	for (it2 = movingObjectList.begin();it2 != movingObjectList.end();it2++)
+		(*it2)->Render();
 	player->Render();
 	SDL_RenderPresent(renderer);
+	return;
 }
 void Engine::Clean() {
 	TextureManager::GetInstance()->Clean();
@@ -130,8 +134,10 @@ void Engine::Clean() {
 	SDL_DestroyRenderer(renderer);
 	window = nullptr;
 	renderer = nullptr;
+	return;
 }
 
 void Engine::Quit() {
 	bIsRunning = false;
+	return;
 }

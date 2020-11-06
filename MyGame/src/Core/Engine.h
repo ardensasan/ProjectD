@@ -1,7 +1,7 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 #include "SDL.h"
-#include "GameObject.h"
+#include "MovingObject.h"
 #include <vector>
 class Engine
 {
@@ -23,8 +23,8 @@ private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	std::vector<GameObject*> staticObjectList;
-	std::vector<GameObject*> movingObjectList;
-	GameObject* player;
+	std::vector<MovingObject*> movingObjectList;
+	MovingObject* player;
 };
 
 #endif

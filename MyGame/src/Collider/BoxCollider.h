@@ -7,8 +7,7 @@ class BoxCollider
 {
 public:
 	BoxCollider();
-	BoxCollider(ObjectProperty objProp);
-	void Update(float x, float y, int w, int h, std::string name);
+	void Update(ObjectProperty objProp);
 	SDL_Rect GetBoxCollider();
 	void Render();
 private:
