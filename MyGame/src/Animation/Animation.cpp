@@ -1,21 +1,24 @@
 #include "Animation.h"
 #include "TextureManager.h"
 #include "Camera.h"
-Animation::Animation() {
+#include <iostream>
+Animation::Animation(int w, int h) {
+	width = w;
+	height = h;
 	frameRow = 0;
 	frameCol = 0;
+	animationDelay = 50;
 }
 void Animation::Update() {
 	frameRow = (SDL_GetTicks() / animationDelay) % frameMaxRow;
 }
 
-void Animation::Render(int x, int y, int width, int height) {
+void Animation::Render(int x, int y) {
 	TextureManager::GetInstance()->DrawFrame(textureID, x, y, width, height, frameRow, frameCol, Camera::GetInstance()->GetCameraView(), flip);
 }
 
-void Animation::SetProperty(std::string id, int width, int height, int animationdelay, SDL_RendererFlip f) {
+void Animation::SetProperty(std::string id, SDL_RendererFlip f) {
 	textureID = id;
-	animationDelay = animationdelay;
 	flip = f;
 	frameMaxCol = TextureManager::GetInstance()->GetMaxFrameCols(textureID, height);
 	frameMaxRow = TextureManager::GetInstance()->GetMaxFrameRows(textureID, width);

@@ -5,13 +5,14 @@
 class Animation
 {
 public:
-	Animation();
-	void SetProperty(std::string id, int width, int height, int animationspeed, SDL_RendererFlip f);
+	Animation(int w, int h);
+	void SetProperty(std::string id, SDL_RendererFlip f);
 	void Update();
-	void Render(int x, int y, int width, int height);
+	void Render(int x, int y);
 	void Clean();
 private:
 	std::string textureID;
+	int width, height;
 	int frameRow, frameCol, frameMaxRow, frameMaxCol, animationDelay;
 	SDL_RendererFlip flip;
 

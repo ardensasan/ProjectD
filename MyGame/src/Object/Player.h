@@ -1,19 +1,26 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "MovingObject.h"
-#include "SDL.h"
+#include "BoxCollider.h"
+#include "Animation.h"
 class Player:public MovingObject
 {
 public:
 	Player(ObjectProperty objectProperty);
-	virtual void Update(float dt);
-	virtual bool CheckCollisionToObject(SDL_Rect objectCollider);
-	virtual SDL_Rect GetCollider() { return movingObject->GetCollider(); }
-	virtual void Render();
-	virtual void Clean();
+	void Update(float dt);
+	inline SDL_Rect GetCollider() { return boxCollider->GetBoxCollider(); }
+	void CollisionToObject(SDL_Rect enemyBox, float dt);
+	bool IsHit() { return isHit; }
+	void MoveXPosition(float dt, int x);
+	void MoveYPosition(float dt);
+	void Render();
+	void Clean();
 private:
-	int isHitCD;
-	MovingObject* movingObject;
+	int direction;
+	bool isOnGround;
+	SDL_RendererFlip flip;
+	Animation* animation;
+	BoxCollider* boxCollider;
 };
 #endif
 
