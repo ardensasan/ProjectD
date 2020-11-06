@@ -11,7 +11,7 @@ public:
 	inline SDL_Rect GetCollider() { return boxCollider->GetBoxCollider(); }
 	void CollisionToObject(SDL_Rect enemyBox, float dt);
 	bool IsHit() { return isHit; }
-	void MoveXPosition(float dt, int x);
+	void MoveXPosition(float dt, float x);
 	void MoveYPosition(float dt);
 	void Render();
 	void Clean();

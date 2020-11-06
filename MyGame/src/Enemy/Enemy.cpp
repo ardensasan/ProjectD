@@ -38,9 +38,9 @@ void Enemy::Update(float dt) {
 	return;
 }
 
-void Enemy::MoveXPosition(float dt, int x) {
+void Enemy::MoveXPosition(float dt, float x) {
 	if (x > 0) {
-		for (int i = 0; i < x; i++)
+		for (int i = 0; i < (int)x; i++)
 		{
 			objectProperty.xPosition += dt;
 			boxCollider->Update(objectProperty);
@@ -51,7 +51,7 @@ void Enemy::MoveXPosition(float dt, int x) {
 		}
 	}
 	if (x < 0) {
-		for (int i = x; i < 0; i++)
+		for (int i = (int)x; i < 0; i++)
 		{
 			objectProperty.xPosition -= dt;
 			boxCollider->Update(objectProperty);

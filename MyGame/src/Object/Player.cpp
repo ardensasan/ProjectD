@@ -61,9 +61,9 @@ void Player::Update(float dt) {
 	animation->Update();
 }
 
-void Player::MoveXPosition(float dt, int x) {
+void Player::MoveXPosition(float dt, float x) {
 	if (x > 0) {
-		for (int i = 0; i < x; i++)
+		for (int i = 0; i < (int)x; i++)
 		{
 			objectProperty.xPosition += dt;
 			boxCollider->Update(objectProperty);
@@ -74,7 +74,7 @@ void Player::MoveXPosition(float dt, int x) {
 		}
 	}
 	if (x < 0) {
-		for (int i = x; i < 0; i++)
+		for (int i = (int)x; i < 0; i++)
 		{
 			objectProperty.xPosition -= dt;
 			boxCollider->Update(objectProperty);

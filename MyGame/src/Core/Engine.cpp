@@ -84,6 +84,7 @@ void Engine::Init() {
 			}
 		}
 	}
+	return;
 }
 void Engine::Events() {
 	Input::GetInstance()->Listen();
@@ -108,6 +109,7 @@ void Engine::Update() {
 			player->CollisionToObject((*it2)->GetCollider(),dt);
 	}
 	MapParser::GetInstance()->GetMapLayers();
+	return;
 }
 void Engine::Render() {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
@@ -122,6 +124,7 @@ void Engine::Render() {
 		(*it2)->Render();
 	player->Render();
 	SDL_RenderPresent(renderer);
+	return;
 }
 void Engine::Clean() {
 	TextureManager::GetInstance()->Clean();
@@ -131,8 +134,10 @@ void Engine::Clean() {
 	SDL_DestroyRenderer(renderer);
 	window = nullptr;
 	renderer = nullptr;
+	return;
 }
 
 void Engine::Quit() {
 	bIsRunning = false;
+	return;
 }

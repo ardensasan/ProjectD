@@ -18,7 +18,7 @@ private:
 	float yVelocity;
 	bool isOnGround;
 	bool changeDirection;
-	void MoveXPosition(float dt, int x);
+	void MoveXPosition(float dt, float x);
 	void MoveYPosition(float dt);
 	SDL_RendererFlip flip;
 	Animation* animation;
