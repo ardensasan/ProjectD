@@ -17,11 +17,13 @@ private:
 	int direction;
 	float yVelocity;
 	bool isOnGround;
-	void MoveXPosition(float dt);
+	bool changeDirection;
+	void MoveXPosition(float dt, int x);
 	void MoveYPosition(float dt);
 	SDL_RendererFlip flip;
 	Animation* animation;
 	BoxCollider* boxCollider;
+	BoxCollider* tempBoxCollider;
 };
 #endif
 

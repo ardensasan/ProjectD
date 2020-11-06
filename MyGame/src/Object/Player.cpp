@@ -107,6 +107,7 @@ void Player::MoveYPosition(float dt) {
 			objectProperty.yPosition -= dt;
 			boxCollider->Update(objectProperty);
 			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 2)) {
+				yVelocity = 0;
 				objectProperty.yPosition +=  dt;
 				break;
 			}

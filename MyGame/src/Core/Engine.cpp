@@ -52,7 +52,9 @@ void Engine::Init() {
 				TextureManager::GetInstance()->Load("Melon", "assets/Items/Fruits/Melon.png");
 				//load enemy assets
 				TextureManager::GetInstance()->Load("AngryPig_idle", "assets/Enemies/AngryPig/Idle (36x30).png");
+				TextureManager::GetInstance()->Load("AngryPig_run", "assets/Enemies/AngryPig/Run (36x30).png");
 				TextureManager::GetInstance()->Load("Chicken_idle", "assets/Enemies/Chicken/Idle (32x34).png");
+				TextureManager::GetInstance()->Load("Chicken_run", "assets/Enemies/Chicken/Run (32x34).png");
 				TextureManager::GetInstance()->Load("Bunny_idle", "assets/Enemies/Bunny/Idle (34x44).png");
 				Camera::GetInstance()->Set(screenWidth, screenHeight);
 				if (!MapParser::GetInstance()->Load()) {
