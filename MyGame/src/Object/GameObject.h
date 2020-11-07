@@ -16,7 +16,7 @@ class GameObject:public IObject
 {
 public:
 	GameObject() {}
-	virtual void Update() = 0;
+	virtual void Update(float dt) = 0;
 	virtual SDL_Rect GetCollider() = 0;
 	virtual void Render() = 0;
 	virtual void Clean() = 0;

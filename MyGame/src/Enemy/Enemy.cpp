@@ -16,19 +16,19 @@ Enemy::Enemy(ObjectProperty objProp) {
 	changeDirection = false;
 }
 
-void Enemy::Update() {
-	yVelocity++;
-	if (yVelocity > 2)
-		yVelocity = 2;
-	animation->SetProperty(objectProperty.name + "_idle", flip);
-	MoveXPosition(MOVEX*direction);
-	if (changeDirection)
-		direction = -direction;
+void Enemy::Update(float dt) {
 	if (direction == 1)
 		flip = SDL_FLIP_NONE;
 	else
 		flip = SDL_FLIP_HORIZONTAL;
-	MoveYPosition();
+	yVelocity++;
+	if (yVelocity > 2)
+		yVelocity = 2;
+	animation->SetProperty(objectProperty.name + "_idle", flip);
+	MoveXPosition(dt, MOVEX*direction * dt);
+	if (changeDirection)
+		direction = -direction;
+	MoveYPosition(dt);
 	boxCollider->Update(objectProperty);
 	animation->Update();
 
@@ -38,14 +38,14 @@ void Enemy::Update() {
 	return;
 }
 
-void Enemy::MoveXPosition(float x) {
+void Enemy::MoveXPosition(float dt, float x) {
 	if (x > 0) {
 		for (int i = 0; i < (int)x; i++)
 		{
-			objectProperty.xPosition ++;
+			objectProperty.xPosition += dt;
 			boxCollider->Update(objectProperty);
 			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 0)) {
-				objectProperty.xPosition --;
+				objectProperty.xPosition -= dt;
 				changeDirection = true;
 				break;
 			}
@@ -54,10 +54,10 @@ void Enemy::MoveXPosition(float x) {
 	if (x < 0) {
 		for (int i = (int)x; i < 0; i++)
 		{
-			objectProperty.xPosition --;
+			objectProperty.xPosition -= dt;
 			boxCollider->Update(objectProperty);
 			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 0)) {
-				objectProperty.xPosition ++;
+				objectProperty.xPosition += dt;
 				changeDirection = true;
 				break;
 			}
@@ -67,7 +67,7 @@ void Enemy::MoveXPosition(float x) {
 	return;
 }
 
-void Enemy::MoveYPosition() {
+void Enemy::MoveYPosition(float dt) {
 	changeDirection = true;
 	isOnGround = false;
 	float y = yVelocity;
@@ -75,19 +75,19 @@ void Enemy::MoveYPosition() {
 		for (int i = 0; i < (int)y; i++)
 		{
 
-			objectProperty.yPosition ++;
+			objectProperty.yPosition += dt;
 			boxCollider->Update(objectProperty);
 
 			ObjectProperty tempObjectProperty = objectProperty;
 			tempObjectProperty.xPosition -= tempObjectProperty.width* direction;
 			tempBoxCollider->Update(tempObjectProperty);
-			tempObjectProperty.yPosition ++;
+			tempObjectProperty.yPosition += dt;
 			tempBoxCollider->Update(tempObjectProperty);
 			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(tempBoxCollider->GetBoxCollider(), 4)) {
 				changeDirection = false;
 			}
 			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 4)) {
-				objectProperty.yPosition --;
+				objectProperty.yPosition -= dt;
 				isOnGround = true;
 				break;
 			}
@@ -96,11 +96,11 @@ void Enemy::MoveYPosition() {
 	else if (y < 0) {
 		for (int i = (int)y; i < 0; i++)
 		{
-			objectProperty.yPosition --;
+			objectProperty.yPosition -= dt;
 			boxCollider->Update(objectProperty);
 			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 2)) {
 				yVelocity = 0;
-				objectProperty.yPosition ++;
+				objectProperty.yPosition += dt;
 				break;
 			}
 		}

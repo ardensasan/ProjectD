@@ -7,12 +7,12 @@ class Player:public MovingObject
 {
 public:
 	Player(ObjectProperty objectProperty);
-	void Update();
+	void Update(float dt);
 	inline SDL_Rect GetCollider() { return boxCollider->GetBoxCollider(); }
-	void CollisionToObject(SDL_Rect enemyBox);
+	void CollisionToObject(SDL_Rect enemyBox, float dt);
 	bool IsHit() { return isHit; }
-	void MoveXPosition(float x);
-	void MoveYPosition();
+	void MoveXPosition(float dt, float x);
+	void MoveYPosition(float dt);
 	void Render();
 	void Clean();
 private:

@@ -40,7 +40,7 @@ void TileParser::Render() {
 							tileRow--;
 							tileCol = tileSetList[ts].colCount - 1;
 						}
-						TextureManager::GetInstance()->DrawTile(tileSetList[ts].name, row, col, tileSetList[ts].width, tileSetList[ts].height, tileRow, tileCol);
+						TextureManager::GetInstance()->DrawTile(tileSetList[ts].name, row, col, tileSetList[ts].width, tileSetList[ts].height, tileRow, tileCol,Camera::GetInstance()->GetCameraView());
 						break;
 					}
 				}

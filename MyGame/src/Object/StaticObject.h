@@ -7,7 +7,7 @@ class StaticObject:public GameObject
 {
 public:
 	StaticObject(ObjectProperty objProp);
-	void Update();
+	void Update(float dt);
 	inline SDL_Rect GetCollider() { return boxCollider->GetBoxCollider(); }
 	void Render();
 	void Clean();

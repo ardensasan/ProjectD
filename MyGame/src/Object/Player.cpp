@@ -3,9 +3,9 @@
 #include "Camera.h"
 #include "CollisionHandler.h"
 #include "Camera.h"
-const float MOVEX = 5.0f;
+const float MOVEX = 4.0f;
 const float MOVEHIT = -10.0f;
-const float JUMP = -12.0f;
+const float JUMP = -8.0f;
 Player::Player(ObjectProperty objProp) {
 	objectProperty = objProp;
 	direction = 3;
@@ -16,32 +16,33 @@ Player::Player(ObjectProperty objProp) {
 	isHitCD = 200;
 }
 
-void Player::Update() {
+void Player::Update(float dt) {
 	if (direction == 1)
 		flip = SDL_FLIP_NONE;
 	else if (direction == -1)
 		flip = SDL_FLIP_HORIZONTAL;
 
-	yVelocity++;
+	yVelocity+=0.5f;
 	animation->SetProperty(objectProperty.name+"_idle", flip);
 	//move left
 	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_A) && isHitCD > 50) {
 		direction = -1;
 		animation->SetProperty(objectProperty.name + "_run", flip);
-		MoveXPosition(MOVEX * direction);
+		MoveXPosition(dt, MOVEX * direction);
 	}
 	//move right
 	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_D) && isHitCD > 50) {
 		direction = 1;
 		animation->SetProperty(objectProperty.name + "_run", flip);
-		MoveXPosition(MOVEX * direction);
+		MoveXPosition(dt, MOVEX * direction);
 	}
 	//jump
 	if (Input::GetInstance()->GetKeyDown(SDL_SCANCODE_SPACE) && isOnGround && isHitCD > 50) {
 		yVelocity = JUMP;
 	}
-	if (yVelocity > 10)
-		yVelocity = 10;
+	if (yVelocity > 8) {
+		yVelocity = 8;
+	}
 	if(yVelocity < 0)
 		animation->SetProperty(objectProperty.name + "_jump", flip);
 	if(yVelocity >= 0 && !isOnGround)
@@ -53,57 +54,74 @@ void Player::Update() {
 			isHit = false;
 	}
 	if (xVelocity > 0)
-		xVelocity--;
+		xVelocity-=0.5f;
 	else if (xVelocity < 0)
-		xVelocity+=2;
-	MoveXPosition(xVelocity);
-	MoveYPosition();
-	animation->Update();
+		xVelocity+=0.5f;
+	MoveXPosition(dt, xVelocity * dt);
+	MoveYPosition(dt);
 	Camera::GetInstance()->Update(objectProperty.xPosition, objectProperty.yPosition);
+	animation->Update();
 }
 
-void Player::MoveXPosition(float x) {
-	int OGX = objectProperty.xPosition;
-	objectProperty.xPosition += x;
-	boxCollider->Update(objectProperty);
-	if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 0)) {
-		objectProperty.xPosition = OGX;
+void Player::MoveXPosition(float dt, float x) {
+	if (x > 0) {
+		for (int i = 0; i < (int)x; i++)
+		{
+			objectProperty.xPosition += dt;
+			boxCollider->Update(objectProperty);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 0)) {
+				objectProperty.xPosition -= dt;
+				break;
+			}
+		}
+	}
+	if (x < 0) {
+		for (int i = (int)x; i < 0; i++)
+		{
+			objectProperty.xPosition -= dt;
+			boxCollider->Update(objectProperty);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 0)) {
+				objectProperty.xPosition += dt;
+				break;
+			}
+		}
 	}
 }
 
-void Player::MoveYPosition() {
+void Player::MoveYPosition(float dt) {
 	isOnGround = false;
 	float y = yVelocity;
-	int OGY = objectProperty.yPosition;
-	objectProperty.yPosition += y;
-	boxCollider->Update(objectProperty);
 	if (y > 0) {
-		if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 4)) {
-			objectProperty.yPosition = OGY;
-			for (int i = 0; i < (int)y; i++)
-			{
-				objectProperty.yPosition++;
-				boxCollider->Update(objectProperty);
-				if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 4)) {
-					objectProperty.yPosition--;
-					isOnGround = true;
-				}
+		for (int i = 0; i < (int)y; i++)
+		{
+			objectProperty.yPosition += dt;
+			boxCollider->Update(objectProperty);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 4)) {
+				objectProperty.yPosition -= dt;
+				isOnGround = true;
+				break;
 			}
 		}
 	}
 	else if (y < 0) {
-		if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 2)) {
-			objectProperty.yPosition = OGY;
-			yVelocity = 0;
+		for (int i = (int)y; i < 0; i++)
+		{
+			objectProperty.yPosition -= dt;
+			boxCollider->Update(objectProperty);
+			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 2)) {
+				yVelocity = 0;
+				objectProperty.yPosition +=  dt;
+				break;
+			}
 		}
 	}
 }
 //check if player hits an enemy
-void Player::CollisionToObject(SDL_Rect enemyBox) {
+void Player::CollisionToObject(SDL_Rect enemyBox, float dt) {
 	if (CollisionHandler::GetInstance()->CheckCollisionToObject(boxCollider->GetBoxCollider(), enemyBox)) {
 		isHit = true;
 		isHitCD = 0;
-		xVelocity = MOVEHIT*direction;
+		xVelocity = MOVEHIT*direction*dt;
 	}
 }
 

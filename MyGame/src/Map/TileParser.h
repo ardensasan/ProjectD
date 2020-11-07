@@ -1,9 +1,7 @@
 #ifndef TILEPARSER_H
 #define TILEPARSER_H
-#include "SDL.h"
 #include <string>
 #include <vector>
-#include <map>
 class MapParser;
 struct Tileset {
 	int firstID, lastID;
