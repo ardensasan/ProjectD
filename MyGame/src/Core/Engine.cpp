@@ -62,13 +62,14 @@ void Engine::Init() {
 					MapParser::GetInstance()->Clean();
 				}
 				else {
+					ObjectFactory::GetInstance()->LoadObjectMap();
 					staticObjectList.clear();
 					movingObjectList.clear();
 					std::vector<ObjectProperty> objectPropertyList;
 					objectPropertyList = MapParser::GetInstance()->GetStaticObjects();
 					std::vector<ObjectProperty>::iterator it;
 					for (it = objectPropertyList.begin();it != objectPropertyList.end();it++)
-						staticObjectList.push_back(ObjectFactory::GetInstance()->CreateObject(*it));
+						staticObjectList.push_back(ObjectFactory::GetInstance()->CreateStaticObject(*it));
 					objectPropertyList.clear();
 					objectPropertyList = MapParser::GetInstance()->GetMovingObjects();
 					for (it = objectPropertyList.begin();it != objectPropertyList.end();it++) {

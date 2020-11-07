@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "Camera.h"
 #include "CollisionHandler.h"
+#include "Camera.h"
 const float MOVEX = 4.0f;
 const float MOVEHIT = -10.0f;
 const float JUMP = -8.0f;
@@ -58,6 +59,7 @@ void Player::Update(float dt) {
 		xVelocity+=0.5f;
 	MoveXPosition(dt, xVelocity * dt);
 	MoveYPosition(dt);
+	Camera::GetInstance()->Update(objectProperty.xPosition, objectProperty.yPosition);
 	animation->Update();
 }
 
@@ -119,13 +121,12 @@ void Player::CollisionToObject(SDL_Rect enemyBox, float dt) {
 	if (CollisionHandler::GetInstance()->CheckCollisionToObject(boxCollider->GetBoxCollider(), enemyBox)) {
 		isHit = true;
 		isHitCD = 0;
-		xVelocity = MOVEHIT*direction;
+		xVelocity = MOVEHIT*direction*dt;
 	}
 }
 
 void Player::Render() {
 	animation->Render((int)objectProperty.xPosition, (int)objectProperty.yPosition);
-	boxCollider->Render();
 }
 void Player::Clean(){
 	delete animation;

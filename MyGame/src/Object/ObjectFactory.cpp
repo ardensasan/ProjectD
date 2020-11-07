@@ -6,18 +6,26 @@ ObjectFactory* ObjectFactory::GetInstance() {
 		instance = new ObjectFactory();
 	return instance;
 }
-GameObject* ObjectFactory::CreateObject(ObjectProperty objectProperty) {
-	if(objectProperty.type == "Fruit")
-		return new StaticObject(objectProperty);
-	if (objectProperty.type == "Player")
-		return new Player(objectProperty);
-	if (objectProperty.type == "Enemy")
-		return new Enemy(objectProperty);
+
+
+void ObjectFactory::LoadObjectMap() {
+	movingObjectMap["Player"] = &createMovingObject<Player>;
+	staticObjectMap["Fruit"] = &createStaticObject<StaticObject>;
+	movingObjectMap["Enemy"] = &createMovingObject<Enemy>;
+}
+
+StaticObject* ObjectFactory::CreateStaticObject(ObjectProperty objectProperty) {
+	std::map<std::string, StaticObject* (*)(ObjectProperty objectProperty)>::iterator it;
+	for (it = staticObjectMap.begin();it != staticObjectMap.end();it++) {
+		if(objectProperty.type == it->first)
+		return it->second(objectProperty);
+	}
 }
 
 MovingObject* ObjectFactory::CreateMovingObject(ObjectProperty objectProperty) {
-	if (objectProperty.type == "Player")
-		return new Player(objectProperty);
-	if (objectProperty.type == "Enemy")
-		return new Enemy(objectProperty);
+	std::map<std::string, MovingObject* (*)(ObjectProperty objectProperty)>::iterator it;
+	for (it = movingObjectMap.begin();it != movingObjectMap.end();it++) {
+		if (objectProperty.type == it->first)
+			return it->second(objectProperty);
+	}
 }

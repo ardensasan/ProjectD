@@ -15,7 +15,6 @@ void StaticObject::Update(float dt) {
 
 void StaticObject::Render() {
 	animation->Render(int(objectProperty.xPosition), int(objectProperty.yPosition));
-	boxCollider->Render();
 }
 
 void StaticObject::Clean() {

@@ -17,8 +17,6 @@ Enemy::Enemy(ObjectProperty objProp) {
 }
 
 void Enemy::Update(float dt) {
-	if (changeDirection)
-		direction = -direction;
 	if (direction == 1)
 		flip = SDL_FLIP_NONE;
 	else
@@ -28,6 +26,8 @@ void Enemy::Update(float dt) {
 		yVelocity = 2;
 	animation->SetProperty(objectProperty.name + "_idle", flip);
 	MoveXPosition(dt, MOVEX*direction * dt);
+	if (changeDirection)
+		direction = -direction;
 	MoveYPosition(dt);
 	boxCollider->Update(objectProperty);
 	animation->Update();
@@ -46,6 +46,7 @@ void Enemy::MoveXPosition(float dt, float x) {
 			boxCollider->Update(objectProperty);
 			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 0)) {
 				objectProperty.xPosition -= dt;
+				changeDirection = true;
 				break;
 			}
 		}
@@ -57,6 +58,7 @@ void Enemy::MoveXPosition(float dt, float x) {
 			boxCollider->Update(objectProperty);
 			if (CollisionHandler::GetInstance()->CheckObjectMapCollision(boxCollider->GetBoxCollider(), 0)) {
 				objectProperty.xPosition += dt;
+				changeDirection = true;
 				break;
 			}
 		}
@@ -109,8 +111,6 @@ void Enemy::MoveYPosition(float dt) {
 
 void Enemy::Render() {
 	animation->Render((int)objectProperty.xPosition, (int)objectProperty.yPosition);
-	tempBoxCollider->Render();
-	boxCollider->Render();
 	return;
 }
 void Enemy::Clean() {

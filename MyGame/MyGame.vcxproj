@@ -24,6 +24,8 @@
     <ClInclude Include="src\Collider\BoxCollider.h" />
     <ClInclude Include="src\CollisionHandler\CollisionHandler.h" />
     <ClInclude Include="src\Core\Engine.h" />
+    <ClInclude Include="src\Enemy\AngryPig.h" />
+    <ClInclude Include="src\Enemy\Chicken.h" />
     <ClInclude Include="src\Enemy\Enemy.h" />
     <ClInclude Include="src\Graphics\TextureManager.h" />
     <ClInclude Include="src\Input\Input.h" />
