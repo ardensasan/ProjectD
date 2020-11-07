@@ -14,7 +14,7 @@ void Animation::Update() {
 }
 
 void Animation::Render(int x, int y) {
-	TextureManager::GetInstance()->DrawFrame(textureID, x, y, width, height, frameRow, frameCol, Camera::GetInstance()->GetCameraView(), flip);
+	TextureManager::GetInstance()->DrawFrame(textureID, x, y, width, height, frameRow, frameCol, flip);
 }
 
 void Animation::SetProperty(std::string id, SDL_RendererFlip f) {

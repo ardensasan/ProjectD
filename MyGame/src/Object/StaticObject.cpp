@@ -7,7 +7,7 @@ StaticObject::StaticObject(ObjectProperty objProp) {
 	boxCollider = new BoxCollider();
 }
 
-void StaticObject::Update(float dt) {
+void StaticObject::Update() {
 	boxCollider->Update(objectProperty);
 	animation->SetProperty(objectProperty.name, SDL_FLIP_NONE);
 	animation->Update();

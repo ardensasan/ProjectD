@@ -2,6 +2,7 @@
 #include "Engine.h"
 #include "SDL_image.h"
 #include <iostream>
+#include "Camera.h"
 TextureManager* TextureManager::instance = nullptr;
 TextureManager::TextureManager() {
 	texture = nullptr;
@@ -26,24 +27,24 @@ void TextureManager::Draw() {
 	SDL_RenderCopy(Engine::GetInstance()->GetRenderer(),texture,NULL,NULL);
 }
 
-
 void TextureManager::DrawFrame(std::string id, int x, int y, int width, int height, int frameRow, int frameCol, SDL_RendererFlip flip) {
-	srcRect = { frameRow * width, frameCol * height, width, height };
-	dstRect = {x, y, width, height };
-	SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), assetMap[id], &srcRect, &dstRect, 0, 0, flip);
-}
-
-void TextureManager::DrawFrame(std::string id, int x, int y, int width, int height, int frameRow, int frameCol, SDL_Rect cameraView, SDL_RendererFlip flip) {
+	SDL_Rect cameraView = Camera::GetInstance()->GetCameraView();
 	srcRect = { frameRow * width, frameCol * height, width, height };
 	dstRect = { x - cameraView.x ,y - cameraView.y,width,height };
-	SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), assetMap[id], &srcRect, &dstRect, 0, 0, flip);
+	if (dstRect.x >= -dstRect.w && dstRect.x <= Camera::GetInstance()->GetScreenWidth() && dstRect.y >= -dstRect.h && dstRect.y <= Camera::GetInstance()->GetScreenHeight()) {
+		SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), assetMap[id], &srcRect, &dstRect, 0, 0, flip);
+	}
 }
 
-void TextureManager::DrawTile(std::string id,int row,int col,int width, int height, int srcX, int srcY, SDL_Rect cameraView) {
-	srcRect = { srcY * width,srcX* height,width,height };
-	dstRect = { (row * width) - cameraView.x,(col * height)-cameraView.y,width,height };
-	SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), assetMap[id], &srcRect, &dstRect, 0, 0, SDL_FLIP_NONE);
+void TextureManager::DrawTile(std::string id, int row, int col, int width, int height, int srcX, int srcY) {
+	SDL_Rect cameraView = Camera::GetInstance()->GetCameraView();
+	srcRect = { srcY * width,srcX * height,width,height };
+	dstRect = { (row * width) - cameraView.x,(col * height) - cameraView.y,width,height };
+	if (dstRect.x >= -dstRect.w && dstRect.x <= Camera::GetInstance()->GetScreenWidth() && dstRect.y >= -dstRect.h && dstRect.y <= Camera::GetInstance()->GetScreenHeight()) {
+		SDL_RenderCopy(Engine::GetInstance()->GetRenderer(), assetMap[id], &srcRect, &dstRect);
+	}
 }
+		
 
 int TextureManager::GetMaxFrameRows(std::string textureID, int width) {
 	int textureWidth;

@@ -42,8 +42,6 @@
     <ClInclude Include="src\Vendor\tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AngryPig.cpp" />
-    <ClCompile Include="Chicken.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="src\Animation\Animation.cpp" />
     <ClCompile Include="src\Camera\Camera.cpp" />

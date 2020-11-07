@@ -7,9 +7,9 @@ class Enemy :public MovingObject
 {
 public:
 	Enemy(ObjectProperty objectProperty);
-	void Update(float dt);
+	void Update();
 	inline SDL_Rect GetCollider() { return boxCollider->GetBoxCollider(); }
-	void CollisionToObject(SDL_Rect enemyBox, float dt) {}
+	void CollisionToObject(SDL_Rect enemyBox) {}
 	bool IsHit() { return isHit; }
 	void Render();
 	void Clean();
@@ -18,8 +18,8 @@ private:
 	float yVelocity;
 	bool isOnGround;
 	bool changeDirection;
-	void MoveXPosition(float dt, float x);
-	void MoveYPosition(float dt);
+	void MoveXPosition(float x);
+	void MoveYPosition();
 	SDL_RendererFlip flip;
 	Animation* animation;
 	BoxCollider* boxCollider;

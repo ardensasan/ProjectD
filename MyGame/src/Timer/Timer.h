@@ -2,16 +2,15 @@
 #define TIMER_H
 
 const int TARGET_FPS = 60;
-const float TARGET_DELTATIME = 1.5f;
+const int FRAMEDELAY = 1000/ TARGET_FPS;
 class Timer
 {
 public:
 	void Tick();
 	static Timer* GetInstance();
-	inline float GetDeltaTime() { return flDeltaTime; }
 private:
 	Timer();
 	static Timer* instance;
-	float flDeltaTime;
+	int frameTime;
 };
 #endif

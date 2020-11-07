@@ -5,9 +5,9 @@ class MovingObject:public GameObject
 {
 public:
 	MovingObject() {}
-	virtual void Update(float dt) = 0;
+	virtual void Update() = 0;
 	virtual SDL_Rect GetCollider() = 0;
-	virtual void CollisionToObject(SDL_Rect enemyBox, float dt) = 0;
+	virtual void CollisionToObject(SDL_Rect enemyBox) = 0;
 	virtual bool IsHit() = 0;
 	virtual void Render() = 0;
 	virtual void Clean() = 0;

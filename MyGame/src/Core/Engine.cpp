@@ -92,11 +92,9 @@ void Engine::Events() {
 }
 
 void Engine::Update() {
-	float dt = Timer::GetInstance()->GetDeltaTime();
 	std::vector<GameObject*>::iterator it;
-	player->Update(dt);
 	for (it = staticObjectList.begin();it != staticObjectList.end();it++) {
-		(*it)->Update(dt);
+		(*it)->Update();
 		if (CollisionHandler::GetInstance()->CheckCollisionToObject(player->GetCollider(), (*it)->GetCollider())) {
 			it = staticObjectList.erase(it);
 			if (it >= staticObjectList.end())
@@ -105,10 +103,11 @@ void Engine::Update() {
 	}
 	std::vector<MovingObject*>::iterator it2;
 	for (it2 = movingObjectList.begin();it2 != movingObjectList.end();it2++) {
-		(*it2)->Update(dt);
+		(*it2)->Update();
 		if(!player->IsHit())
-			player->CollisionToObject((*it2)->GetCollider(),dt);
+			player->CollisionToObject((*it2)->GetCollider());
 	}
+	player->Update();
 	MapParser::GetInstance()->GetMapLayers();
 	return;
 }
@@ -117,13 +116,13 @@ void Engine::Render() {
 	SDL_RenderClear(renderer);
 	MapParser::GetInstance()->Render();
 	std::vector<GameObject*>::iterator it;
+	player->Render();
 	for (it = staticObjectList.begin();it != staticObjectList.end();it++)
 		(*it)->Render();
 
 	std::vector<MovingObject*>::iterator it2;
 	for (it2 = movingObjectList.begin();it2 != movingObjectList.end();it2++)
 		(*it2)->Render();
-	player->Render();
 	SDL_RenderPresent(renderer);
 	return;
 }

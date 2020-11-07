@@ -1,12 +1,11 @@
 #include "Timer.h"
 #include <SDL.h>
 Timer* Timer::instance = nullptr;
-Uint32 flLastTime;
+Uint32 frameStart;
 Timer::Timer() {
-	flLastTime = 0;
-	flDeltaTime = 1.5f;
+	frameTime = 0;
 }
-#include <iostream>
+
 Timer* Timer::GetInstance() {
 	if (instance == nullptr) {
 		instance = new Timer();
@@ -14,9 +13,9 @@ Timer* Timer::GetInstance() {
 	return  instance;
 }
 void Timer::Tick() {
-	flDeltaTime = (SDL_GetTicks() - flLastTime)*(TARGET_FPS/1000.0f);
-	if (flDeltaTime > TARGET_DELTATIME) {
-		flDeltaTime = TARGET_DELTATIME;
+	frameTime = SDL_GetTicks() - frameStart;
+	if (FRAMEDELAY > frameTime) {
+		SDL_Delay(FRAMEDELAY - frameTime);
 	}
-	flLastTime = SDL_GetTicks();
+	frameStart = SDL_GetTicks();
 }
