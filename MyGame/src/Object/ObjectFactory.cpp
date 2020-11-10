@@ -1,4 +1,6 @@
 #include "ObjectFactory.h"
+#include "Chicken.h"
+#include "Rhino.h"
 ObjectFactory* ObjectFactory::instance = nullptr;
 ObjectFactory::ObjectFactory(){}
 ObjectFactory* ObjectFactory::GetInstance() {
@@ -9,9 +11,9 @@ ObjectFactory* ObjectFactory::GetInstance() {
 
 
 void ObjectFactory::LoadObjectMap() {
-	movingObjectMap["Player"] = &createMovingObject<Player>;
 	staticObjectMap["Fruit"] = &createStaticObject<StaticObject>;
-	movingObjectMap["Enemy"] = &createMovingObject<Enemy>;
+	enemyObjectMap["Chicken"] = &createEnemyObject<Chicken>;
+	enemyObjectMap["Rhino"] = &createEnemyObject<Rhino>;
 }
 
 StaticObject* ObjectFactory::CreateStaticObject(ObjectProperty objectProperty) {
@@ -22,10 +24,11 @@ StaticObject* ObjectFactory::CreateStaticObject(ObjectProperty objectProperty) {
 	}
 }
 
-MovingObject* ObjectFactory::CreateMovingObject(ObjectProperty objectProperty) {
-	std::map<std::string, MovingObject* (*)(ObjectProperty objectProperty)>::iterator it;
-	for (it = movingObjectMap.begin();it != movingObjectMap.end();it++) {
-		if (objectProperty.type == it->first)
+
+Enemy* ObjectFactory::CreateEnemyObject(ObjectProperty objectProperty) {
+	std::map<std::string, Enemy* (*)(ObjectProperty objectProperty)>::iterator it;
+	for (it = enemyObjectMap.begin();it != enemyObjectMap.end();it++) {
+		if (objectProperty.name == it->first)
 			return it->second(objectProperty);
 	}
 }

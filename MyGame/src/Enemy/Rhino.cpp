@@ -1,24 +1,24 @@
-#include "Enemy.h"
-#include "Input.h"
+#include "Rhino.h"
 #include "Camera.h"
 #include "CollisionHandler.h"
-const float MOVEX = -2.0f;
 const float JUMP = -8.0f;
-Enemy::Enemy(ObjectProperty objProp) {
+Rhino::Rhino(ObjectProperty objProp) {
 	objectProperty = objProp;
 	direction = -1;
 	animation = new Animation(objectProperty.width, objectProperty.height);
 	boxCollider = new BoxCollider();
-	tempBoxCollider = new BoxCollider();
 	yVelocity = 1;
 	xVelocity = 0;
 	isOnGround = true;
 	set = false;
 	boundarySet = false;
+	playerDetected = false;
+	hitWall = false;
+	hitWallCD = 0;
 }
 
-void Enemy::Update(float dt) {
-	if (direction == 1)
+void Rhino::Update(float dt) {
+	if (direction == -1)
 		flip = SDL_FLIP_NONE;
 	else
 		flip = SDL_FLIP_HORIZONTAL;
@@ -27,9 +27,38 @@ void Enemy::Update(float dt) {
 		yVelocity = 2;
 	animation->SetProperty(objectProperty.name + "_idle", flip);
 	if (set) {
-		while(!movementBoundary->IsBoundarySet())
+		while (!movementBoundary->IsBoundarySet())
 			movementBoundary->UpdateBoundary();
 		boundarySet = true;
+	}
+	if (playerDetected) {
+		std::cout << xVelocity << std::endl;
+		if (direction == 1 && playerDetected)
+			xVelocity+=0.5f;
+		if (direction == -1 && playerDetected)
+			xVelocity-= 0.5f;
+		if (xVelocity > 10)
+			xVelocity = 10;
+		if (xVelocity < -10)
+			xVelocity = -10;
+		MoveXPosition(dt, xVelocity * dt);
+	}
+	if (hitWall) {
+		if (xVelocity < 0) {
+			xVelocity+= 0.5f;
+		}
+		if (xVelocity > 0) {
+			xVelocity-=0.5f;
+		}
+		if (xVelocity == 0 && hitWallCD > 100){
+			hitWall = false;
+			hitWallCD = 0;
+		}
+		hitWallCD++;
+		MoveXPosition(dt, xVelocity * dt);
+		animation->SetProperty(objectProperty.name + "_idle", flip);
+		if(xVelocity != 0)
+			animation->SetProperty(objectProperty.name + "_hit_wall", flip);
 	}
 	MoveYPosition(dt);
 	boxCollider->Update(objectProperty);
@@ -37,32 +66,35 @@ void Enemy::Update(float dt) {
 	return;
 }
 
-void Enemy::CheckPlayerInBoundary(SDL_Rect playerBox,float dt) {
-	if (boundarySet) {
+void Rhino::CheckPlayerInBoundary(SDL_Rect playerBox, float dt) {
+	if (boundarySet && !playerDetected && !hitWall) {
 		SDL_Rect objectCollider = boxCollider->GetBoxCollider();
 		if (CollisionHandler::GetInstance()->IsInBoundary(movementBoundary->GetBoxCollider(), playerBox)) { // check if player is in the boundary
-			if (playerBox.x < objectCollider.x) {
-				direction = 1;
-				MoveXPosition(dt, MOVEX * direction * dt);
-			}
-			else if (playerBox.x > objectCollider.x + objectCollider.w) {
+			if (playerBox.x <= objectCollider.x) {
 				direction = -1;
-				MoveXPosition(dt, MOVEX * direction * dt);
+				playerDetected = true;
+			}
+			else if (playerBox.x >= objectCollider.x + objectCollider.w) {
+				direction = 1;
+				playerDetected = true;
 			}
 		}
 	}
 }
 
-void Enemy::MoveXPosition(float dt, float x) {
+void Rhino::MoveXPosition(float dt, float x) {
 	if (x > 0) {
 		for (int i = 0; i < (int)x; i++)
 		{
 			objectProperty.xPosition += dt;
 			boxCollider->Update(objectProperty);
 			if (CollisionHandler::GetInstance()->IsInBoundary(movementBoundary->GetBoxCollider(), boxCollider->GetBoxCollider())) {
-				if (direction == -1 && (movementBoundary->GetBoxCollider().w + movementBoundary->GetBoxCollider().x) < (boxCollider->GetBoxCollider().x + boxCollider->GetBoxCollider().w)) {
+				if (direction == 1 && (movementBoundary->GetBoxCollider().w + movementBoundary->GetBoxCollider().x) < (boxCollider->GetBoxCollider().x + boxCollider->GetBoxCollider().w)) {
 					objectProperty.xPosition -= dt;
-					direction = -direction;
+					playerDetected = false;
+					xVelocity = 8 * -direction;
+					yVelocity = -5;
+					hitWall = true;
 					break;
 				}
 			}
@@ -74,9 +106,12 @@ void Enemy::MoveXPosition(float dt, float x) {
 			objectProperty.xPosition -= dt;
 			boxCollider->Update(objectProperty);
 			if (CollisionHandler::GetInstance()->IsInBoundary(movementBoundary->GetBoxCollider(), boxCollider->GetBoxCollider())) {
-				if (direction == 1 && movementBoundary->GetBoxCollider().x > boxCollider->GetBoxCollider().x) {
+				if (direction == -1 && movementBoundary->GetBoxCollider().x > boxCollider->GetBoxCollider().x) {
 					objectProperty.xPosition += dt;
-					direction = -direction;
+					playerDetected = false;
+					xVelocity = 8 * -direction;
+					yVelocity = -5;
+					hitWall = true;
 					break;
 				}
 			}
@@ -87,7 +122,7 @@ void Enemy::MoveXPosition(float dt, float x) {
 	return;
 }
 
-void Enemy::MoveYPosition(float dt) {
+void Rhino::MoveYPosition(float dt) {
 	isOnGround = false;
 	float y = yVelocity;
 	if (y > 0) {
@@ -123,15 +158,14 @@ void Enemy::MoveYPosition(float dt) {
 }
 
 
-void Enemy::Render() {
+void Rhino::Render() {
 	animation->Render((int)objectProperty.xPosition, (int)objectProperty.yPosition);
-	tempBoxCollider->Render();
 	if (set) {
 		movementBoundary->Render();
 	}
 	return;
 }
-void Enemy::Clean() {
+void Rhino::Clean() {
 	delete animation;
 	delete boxCollider;
 	return;

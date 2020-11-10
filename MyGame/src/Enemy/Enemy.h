@@ -1,35 +1,21 @@
 #ifndef ENEMY_H
 #define ENEMY_H
-#include "MovingObject.h"
+#include "GameObject.h"
 #include "BoxCollider.h"
 #include "Animation.h"
 #include "MovementBoundary.h"
-class Enemy :public MovingObject
+class Enemy :public GameObject
 {
 public:
-	Enemy(ObjectProperty objectProperty);
-	void Update(float dt);
-	inline SDL_Rect GetCollider() { return boxCollider->GetBoxCollider(); }
-	void CollisionToObject(SDL_Rect enemyBox, float dt) {}
-	void CheckPlayerInBoundary(SDL_Rect playerBox, float dt);
-	bool IsHit() { return isHit; }
-	void Render();
-	void Clean();
-	void UpdateBoundary();
-private:
-	bool set;
-	int direction;
-	float yVelocity;
-	bool isOnGround;
-	void MoveXPosition(float dt, float x);
-	void MoveYPosition(float dt);
-	SDL_RendererFlip flip;
-	Animation* animation;
-	BoxCollider* boxCollider;
-	BoxCollider* tempBoxCollider;
-
-	MovementBoundary* movementBoundary;
-	bool boundarySet;
+	Enemy() {}
+	virtual void Update(float dt) = 0;
+	virtual inline SDL_Rect GetCollider() = 0;
+	virtual void CollisionToObject(SDL_Rect enemyBox, float dt) = 0;
+	virtual void CheckPlayerInBoundary(SDL_Rect playerBox, float dt) = 0;
+	virtual void Render() = 0;
+	virtual void Clean() = 0;
+protected:
+	float moveSpeed;
 };
 #endif
 

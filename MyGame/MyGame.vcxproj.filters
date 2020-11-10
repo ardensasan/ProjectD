@@ -72,13 +72,13 @@
     <ClInclude Include="src\Object\MovingObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Enemy\AngryPig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Enemy\Chicken.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Object\MovementBoundary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Enemy\Rhino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -128,10 +128,13 @@
     <ClCompile Include="src\Object\StaticObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Enemy\Enemy.cpp">
+    <ClCompile Include="src\Object\MovementBoundary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Object\MovementBoundary.cpp">
+    <ClCompile Include="src\Enemy\Rhino.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Enemy\Chicken.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
