@@ -9,6 +9,8 @@ public:
 	BoxCollider();
 	void Update(ObjectProperty objProp);
 	SDL_Rect GetBoxCollider();
+	void Render();
+	void UpdateBoundary(ObjectProperty objProp);
 private:
 	SDL_Rect objectBox;
 };

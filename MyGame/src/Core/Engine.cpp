@@ -106,6 +106,7 @@ void Engine::Update() {
 	std::vector<MovingObject*>::iterator it2;
 	for (it2 = movingObjectList.begin();it2 != movingObjectList.end();it2++) {
 		(*it2)->Update(dt);
+		(*it2)->CheckPlayerInBoundary(player->GetCollider(),dt);
 		if(!player->IsHit())
 			player->CollisionToObject((*it2)->GetCollider(),dt);
 	}

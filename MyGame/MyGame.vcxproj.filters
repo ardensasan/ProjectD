@@ -78,6 +78,9 @@
     <ClInclude Include="src\Enemy\Chicken.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Object\MovementBoundary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Vendor\tinyxml2.cpp">
@@ -126,6 +129,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Enemy\Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Object\MovementBoundary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

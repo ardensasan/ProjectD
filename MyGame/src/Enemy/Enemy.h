@@ -3,6 +3,7 @@
 #include "MovingObject.h"
 #include "BoxCollider.h"
 #include "Animation.h"
+#include "MovementBoundary.h"
 class Enemy :public MovingObject
 {
 public:
@@ -10,20 +11,25 @@ public:
 	void Update(float dt);
 	inline SDL_Rect GetCollider() { return boxCollider->GetBoxCollider(); }
 	void CollisionToObject(SDL_Rect enemyBox, float dt) {}
+	void CheckPlayerInBoundary(SDL_Rect playerBox, float dt);
 	bool IsHit() { return isHit; }
 	void Render();
 	void Clean();
+	void UpdateBoundary();
 private:
+	bool set;
 	int direction;
 	float yVelocity;
 	bool isOnGround;
-	bool changeDirection;
 	void MoveXPosition(float dt, float x);
 	void MoveYPosition(float dt);
 	SDL_RendererFlip flip;
 	Animation* animation;
 	BoxCollider* boxCollider;
 	BoxCollider* tempBoxCollider;
+
+	MovementBoundary* movementBoundary;
+	bool boundarySet;
 };
 #endif
 

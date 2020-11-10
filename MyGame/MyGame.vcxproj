@@ -32,6 +32,7 @@
     <ClInclude Include="src\Map\GameMap.h" />
     <ClInclude Include="src\Map\MapParser.h" />
     <ClInclude Include="src\Map\TileParser.h" />
+    <ClInclude Include="src\Object\MovementBoundary.h" />
     <ClInclude Include="src\Object\GameObject.h" />
     <ClInclude Include="src\Object\IObject.h" />
     <ClInclude Include="src\Object\MovingObject.h" />
@@ -53,6 +54,7 @@
     <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Map\MapParser.cpp" />
     <ClCompile Include="src\Map\TileParser.cpp" />
+    <ClCompile Include="src\Object\MovementBoundary.cpp" />
     <ClCompile Include="src\Object\ObjectFactory.cpp" />
     <ClCompile Include="src\Object\Player.cpp" />
     <ClCompile Include="src\Object\StaticObject.cpp" />
