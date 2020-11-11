@@ -1,20 +1,19 @@
-#include "Chicken.h"
+#include "Mushroom.h"
 #include "Camera.h"
 #include "CollisionHandler.h"
-const float JUMP = -8.0f;
-Chicken::Chicken(ObjectProperty objProp) {
+Mushroom::Mushroom(ObjectProperty objProp) {
 	objectProperty = objProp;
 	direction = -1;
 	animation = new Animation(objectProperty.width, objectProperty.height);
 	boxCollider = new BoxCollider();
 	yVelocity = 1;
-	moveSpeed = -2.0f;
+	moveSpeed = -1.0f;
 	isOnGround = true;
 	set = false;
 	boundarySet = false;
 }
 
-void Chicken::Update(float dt) {
+void Mushroom::Update(float dt) {
 	if (direction == 1)
 		flip = SDL_FLIP_NONE;
 	else
@@ -28,29 +27,18 @@ void Chicken::Update(float dt) {
 			movementBoundary->UpdateBoundary();
 		boundarySet = true;
 	}
+	if(boundarySet)
+		MoveXPosition(dt, moveSpeed * direction * dt);
 	MoveYPosition(dt);
 	boxCollider->Update(objectProperty);
 	animation->Update();
 	return;
 }
 
-void Chicken::CheckPlayerInBoundary(SDL_Rect playerBox, float dt) {
-	if (boundarySet) {
-		SDL_Rect objectCollider = boxCollider->GetBoxCollider();
-		if (CollisionHandler::GetInstance()->IsInBoundary(movementBoundary->GetBoxCollider(), playerBox)) { // check if player is in the boundary
-			if (playerBox.x <= objectCollider.x) {
-				direction = 1;
-				MoveXPosition(dt, moveSpeed * direction * dt);
-			}
-			else if (playerBox.x >= objectCollider.x + objectCollider.w) {
-				direction = -1;
-				MoveXPosition(dt, moveSpeed * direction * dt);
-			}
-		}
-	}
+void Mushroom::CheckPlayerInBoundary(SDL_Rect playerBox, float dt) {
 }
 
-void Chicken::MoveXPosition(float dt, float x) {
+void Mushroom::MoveXPosition(float dt, float x) {
 	if (x > 0) {
 		for (int i = 0; i < (int)x; i++)
 		{
@@ -84,7 +72,7 @@ void Chicken::MoveXPosition(float dt, float x) {
 	return;
 }
 
-void Chicken::MoveYPosition(float dt) {
+void Mushroom::MoveYPosition(float dt) {
 	isOnGround = false;
 	float y = yVelocity;
 	if (y > 0) {
@@ -120,14 +108,14 @@ void Chicken::MoveYPosition(float dt) {
 }
 
 
-void Chicken::Render() {
+void Mushroom::Render() {
 	animation->Render((int)objectProperty.xPosition, (int)objectProperty.yPosition);
 	//if (set) {
 	//	movementBoundary->Render();
 	//}
 	return;
 }
-void Chicken::Clean() {
+void Mushroom::Clean() {
 	delete animation;
 	delete boxCollider;
 	return;

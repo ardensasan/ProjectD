@@ -1,10 +1,10 @@
-#ifndef RHINO_H
-#define RHINO_H
+#ifndef MUSHROOM_H
+#define MUSHROOM_H
 #include "Enemy.h"
-class Rhino:public Enemy
+class Mushroom :public Enemy
 {
 public:
-	Rhino(ObjectProperty objectProperty);
+	Mushroom(ObjectProperty objectProperty);
 	virtual void Update(float dt);
 	virtual inline SDL_Rect GetCollider() { return boxCollider->GetBoxCollider(); }
 	virtual void CollisionToObject(SDL_Rect playerBox, float dt) {}
@@ -20,7 +20,6 @@ private:
 	bool set;
 	int direction;
 	float yVelocity;
-	float xVelocity;
 	bool isOnGround;
 	void MoveXPosition(float dt, float x);
 	void MoveYPosition(float dt);
@@ -29,9 +28,6 @@ private:
 	BoxCollider* boxCollider;
 	MovementBoundary* movementBoundary;
 	bool boundarySet;
-	bool playerDetected;
-	bool hitWall;
-	int hitWallCD;
 };
 #endif
 

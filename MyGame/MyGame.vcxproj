@@ -26,6 +26,7 @@
     <ClInclude Include="src\Core\Engine.h" />
     <ClInclude Include="src\Enemy\Chicken.h" />
     <ClInclude Include="src\Enemy\Enemy.h" />
+    <ClInclude Include="src\Enemy\Mushroom.h" />
     <ClInclude Include="src\Enemy\Rhino.h" />
     <ClInclude Include="src\Graphics\TextureManager.h" />
     <ClInclude Include="src\Input\Input.h" />
@@ -50,6 +51,7 @@
     <ClCompile Include="src\CollisionHandler\CollisionHandler.cpp" />
     <ClCompile Include="src\Core\Engine.cpp" />
     <ClCompile Include="src\Enemy\Chicken.cpp" />
+    <ClCompile Include="src\Enemy\Mushroom.cpp" />
     <ClCompile Include="src\Enemy\Rhino.cpp" />
     <ClCompile Include="src\Graphics\TextureManager.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />

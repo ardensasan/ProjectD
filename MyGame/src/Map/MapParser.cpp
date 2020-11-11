@@ -19,7 +19,7 @@ MapParser* MapParser::GetInstance() {
 bool MapParser::Load() {
 	staticObjectList.clear();
 	movingObjectList.clear();
-	return Parse("Map1", "assets/Maps/test1.tmx");
+	return Parse("Map1", "assets/Maps/test.tmx");
 }
 
 bool MapParser::Parse(std::string id, std::string source) {

@@ -1,6 +1,7 @@
 #include "ObjectFactory.h"
 #include "Chicken.h"
 #include "Rhino.h"
+#include "Mushroom.h"
 ObjectFactory* ObjectFactory::instance = nullptr;
 ObjectFactory::ObjectFactory(){}
 ObjectFactory* ObjectFactory::GetInstance() {
@@ -14,6 +15,7 @@ void ObjectFactory::LoadObjectMap() {
 	staticObjectMap["Fruit"] = &createStaticObject<StaticObject>;
 	enemyObjectMap["Chicken"] = &createEnemyObject<Chicken>;
 	enemyObjectMap["Rhino"] = &createEnemyObject<Rhino>;
+	enemyObjectMap["Mushroom"] = &createEnemyObject<Mushroom>;
 }
 
 StaticObject* ObjectFactory::CreateStaticObject(ObjectProperty objectProperty) {

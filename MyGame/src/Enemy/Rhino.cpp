@@ -160,9 +160,9 @@ void Rhino::MoveYPosition(float dt) {
 
 void Rhino::Render() {
 	animation->Render((int)objectProperty.xPosition, (int)objectProperty.yPosition);
-	if (set) {
-		movementBoundary->Render();
-	}
+	//if (set) {
+	//	movementBoundary->Render();
+	//}
 	return;
 }
 void Rhino::Clean() {

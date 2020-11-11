@@ -7,10 +7,15 @@ public:
 	Chicken(ObjectProperty objectProperty);
 	virtual void Update(float dt);
 	virtual inline SDL_Rect GetCollider() { return boxCollider->GetBoxCollider(); }
-	virtual void CollisionToObject(SDL_Rect enemyBox, float dt) {}
+	virtual void CollisionToObject(SDL_Rect playerBox, float dt) {}
 	virtual void CheckPlayerInBoundary(SDL_Rect playerBox, float dt);
 	virtual void Render();
 	virtual void Clean();
+	virtual bool IsBoundarySet() {
+		if(set)
+			return movementBoundary->IsBoundarySet();
+		return false;
+	}
 private:
 	bool set;
 	int direction;

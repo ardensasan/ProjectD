@@ -11,6 +11,7 @@ Engine::Engine() {
 	bIsRunning = false;
 	window = nullptr;
 	renderer = renderer;
+	boundariesSet = false;
 }
 Engine* Engine::GetInstance() {
 	if (instance == nullptr)
@@ -59,6 +60,8 @@ void Engine::Init() {
 				TextureManager::GetInstance()->Load("Rhino_idle", "assets/Enemies/Rhino/Idle (52x34).png");
 				TextureManager::GetInstance()->Load("Rhino_run", "assets/Enemies/Rhino/Run (52x34).png");
 				TextureManager::GetInstance()->Load("Rhino_hit_wall", "assets/Enemies/Rhino/Hit Wall (52x34).png");
+				TextureManager::GetInstance()->Load("Mushroom_idle", "assets/Enemies/Mushroom/Idle (32x32).png");
+				TextureManager::GetInstance()->Load("Mushroom_run", "assets/Enemies/Mushroom/Run (32x32).png");
 				Camera::GetInstance()->Set(screenWidth, screenHeight);
 				if (!MapParser::GetInstance()->Load()) {
 					bIsRunning = false;
@@ -109,7 +112,8 @@ void Engine::Update() {
 	std::vector<Enemy*>::iterator it2;
 	for (it2 = enemyObjectList.begin();it2 != enemyObjectList.end();it2++) {
 		(*it2)->Update(dt);
-		(*it2)->CheckPlayerInBoundary(player->GetCollider(),dt);
+		if((*it2)->IsBoundarySet())
+			(*it2)->CheckPlayerInBoundary(player->GetCollider(),dt);
 		if(!player->IsHit())
 			player->CollisionToObject((*it2)->GetCollider(),dt);
 	}

@@ -27,6 +27,7 @@ private:
 	std::vector<MovingObject*> movingObjectList;
 	std::vector<Enemy*> enemyObjectList;
 	Player* player;
+	bool boundariesSet;
 };
 
 #endif
