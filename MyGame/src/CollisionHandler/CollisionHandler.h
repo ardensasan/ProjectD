@@ -9,6 +9,7 @@ public:
 	bool CheckObjectMapCollision(SDL_Rect boxCollider, int movemenDirection); // 1 = left, 2 = up, 3 = right, 4 = down
 	bool CheckCollisionToObject(SDL_Rect playerRect, SDL_Rect objectRect);
 	void Clean();
+	bool IsInBoundary(SDL_Rect boundary, SDL_Rect object);// check if object is in boundary
 private:
 	CollisionHandler();
 	static CollisionHandler* instance;

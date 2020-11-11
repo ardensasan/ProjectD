@@ -1,7 +1,8 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 #include "SDL.h"
-#include "MovingObject.h"
+#include "Player.h"
+#include "Enemy.h"
 #include <vector>
 class Engine
 {
@@ -24,7 +25,9 @@ private:
 	SDL_Renderer* renderer;
 	std::vector<GameObject*> staticObjectList;
 	std::vector<MovingObject*> movingObjectList;
-	MovingObject* player;
+	std::vector<Enemy*> enemyObjectList;
+	Player* player;
+	bool boundariesSet;
 };
 
 #endif

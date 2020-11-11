@@ -49,7 +49,9 @@ bool CollisionHandler::CheckObjectMapCollision(SDL_Rect boxCollider, int movemen
 	}
 	return false;
 }
-
+bool CollisionHandler::IsInBoundary(SDL_Rect boundary, SDL_Rect object) {
+	return (SDL_HasIntersection(&boundary, &object));
+}
 bool CollisionHandler::CheckCollisionToObject(SDL_Rect playerRect, SDL_Rect objectRect) {
 	return SDL_HasIntersection(&playerRect, &objectRect);
 }
